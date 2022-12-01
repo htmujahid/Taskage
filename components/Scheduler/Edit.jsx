@@ -51,24 +51,28 @@ function Edit({ task, setEditMode, setIsTime }) {
         <Wrapper>
             <Form onSubmit={handleSubmit}>
                 {showTime && <Time time={time} setTime={setTime} />}
-                <FormWrapper type={2}>
-                    <Image
-                        src="/assets/icons/timer.svg"
-                        className="px-2"
-                        alt=""
-                        onClick={() => setShowTime((prev) => !prev)}
-                        width={64}
-                        height={64}
-                    />
-                    <Input
-                        text={title}
-                        setText={setTitle}
-                        placeholder="Enter a Task"
-                        className={"mb-0"}
-                        required
-                    />
-                    <Discard className={"w-min"}>Discard</Discard>
-                    <Submit className={"w-min"}>SubmitChanges</Submit>
+                <FormWrapper type={5}>
+                    <FormWrapper type={1} className={"w-full"}>
+                        <Image
+                            src="/assets/icons/timer.svg"
+                            className="px-2"
+                            alt=""
+                            onClick={() => setShowTime((prev) => !prev)}
+                            width={64}
+                            height={64}
+                        />
+                        <Input
+                            text={title}
+                            setText={setTitle}
+                            placeholder="Enter a Task"
+                            className={"mb-0 w-full"}
+                            required
+                        />
+                    </FormWrapper>
+                    <FormWrapper type={4} className={"w-full"}>
+                        <Discard>Discard</Discard>
+                        <Submit>SubmitChanges</Submit>
+                    </FormWrapper>
                 </FormWrapper>
             </Form>
         </Wrapper>
