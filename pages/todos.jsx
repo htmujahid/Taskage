@@ -13,8 +13,8 @@ export default function todo() {
             <Head>
                 <title>Taskage - Todo</title>
             </Head>
-            {/* <Navbar /> */}
-            <Todo />
+            <Navbar />
+            {/* <Todo /> */}
         </React.Fragment>
     );
 }
