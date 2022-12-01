@@ -52,7 +52,7 @@ function FormComponent() {
                     placeholder="Enter Habit"
                     required
                 />
-                <FormWrapper type={1}>
+                <FormWrapper type={4}>
                     <Full>
                         <Select
                             select={routine}
