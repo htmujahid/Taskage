@@ -65,7 +65,7 @@ function index() {
                     </select>
                 </div>
             </div>
-            {activeTodos.length > 0 && (
+            {/* {activeTodos.length > 0 && (
                 <div className="my-6">
                     <div className="flex flex-col gap-6">
                         {activeTodos.map((todo) => (
@@ -88,7 +88,7 @@ function index() {
                         ))}
                     </div>
                 </div>
-            )}
+            )} */}
         </React.Fragment>
     );
 }

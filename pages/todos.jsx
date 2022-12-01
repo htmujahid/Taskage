@@ -14,7 +14,8 @@ export default function todo() {
                 <title>Taskage - Todo</title>
             </Head>
             <Navbar />
-            {/* <Todo /> */}
+            <Todo />
+
         </React.Fragment>
     );
 }
