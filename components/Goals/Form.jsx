@@ -60,7 +60,7 @@ function FormComponent() {
                         required
                     />
                 </FormWrapper>
-                <FormWrapper type={1}>
+                <FormWrapper type={4}>
                     <Full>
                         <Input
                             text={title}
