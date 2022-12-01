@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { signIn } from "next-auth/react";
 
-import Brandmark from "../common/Brandmark";
+import Brandmark from "../Common/Brandmark";
 
 import FormWrapper from "../Form/FormWrapper";
 import Form from "../Form/Form";
