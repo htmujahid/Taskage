@@ -7,6 +7,8 @@ import Date from "../Form/Date";
 import Input from "../Form/Input";
 import Submit from "../Form/Submit";
 import Full from "../Common/Full";
+import Discard from "../Form/Discard";
+
 function Edit({ goal, setEditMode }) {
     const { mutate } = useSWRConfig();
     const [startDate, setStartDate] = useState(goal.start_date);
@@ -57,7 +59,7 @@ function Edit({ goal, setEditMode }) {
                         required
                     />
                 </FormWrapper>
-                <FormWrapper type={1}>
+                <FormWrapper type={4}>
                     <Full>
                         <Input
                             text={title}
@@ -67,9 +69,10 @@ function Edit({ goal, setEditMode }) {
                             required
                         />
                     </Full>
-                    <Full>
+                    <FormWrapper type={2} className={"w-full"}>
+                        <Discard>Discard</Discard>
                         <Submit>Add Goal</Submit>
-                    </Full>
+                    </FormWrapper>
                 </FormWrapper>
             </Form>
         </Wrapper>
