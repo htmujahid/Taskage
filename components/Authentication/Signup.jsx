@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Brandmark from "../common/Brandmark";
+import Brandmark from "../Common/Brandmark";
 
 import Input from "../Form/Input";
 import Form from "../Form/Form";
