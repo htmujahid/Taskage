@@ -51,7 +51,7 @@ function Edit({ habit, setEditMode }) {
                     placeholder="Enter Habit"
                     required
                 />
-                <FormWrapper type={1}>
+                <FormWrapper type={4}>
                     <Full>
                         <Select
                             select={routine}
@@ -61,7 +61,7 @@ function Edit({ habit, setEditMode }) {
                             required
                         ></Select>
                     </Full>
-                    <FormWrapper type={1} className={"w-full"}>
+                    <FormWrapper type={4} className={"w-full"}>
                         <Full className="w-full">
                             <Discard onClick={() => setEditMode(false)}>
                                 Discard
