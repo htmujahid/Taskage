@@ -15,7 +15,7 @@ export default async function handler(req, res) {
             try {
                 await client.connect();
                 const db = client.db("taskage");
-                const todoCollection = db.collection("goals");
+                const todoCollection = db.collection("todos");
                 const todoCount = await todoCollection.countDocuments({
                     created_by: session.user.email,
                     completed_at: null,
