@@ -103,7 +103,7 @@ function FormComponent() {
                         placeholder="End Date"
                     />
                 </FormWrapper>
-                <FormWrapper type={1}>
+                <FormWrapper type={4}>
                     <Full>
                         <Select
                             select={status}
