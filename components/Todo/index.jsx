@@ -49,7 +49,7 @@ function index() {
             <div className="my-10">
                 <Form />
             </div>
-            <div className="container-lg mx-auto shadow-md flex justify-between items-center gap-4 p-4 bg-white rounded-lg">
+            <div className="container-lg justify-center sm:justify-start mx-auto shadow-md flex justify-between items-center gap-4 p-4 bg-white rounded-lg">
                 <div>
                     <p>Filter</p>
                 </div>
