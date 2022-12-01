@@ -1,18 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { useSWRConfig } from "swr";
-
 import Wrapper from "../Common/Wrapper";
-import Checkbox from "../Form/Checkbox";
 import Date from "../Form/Date";
+import Form from "../Form/Form";
 import FormWrapper from "../Form/FormWrapper";
 import Input from "../Form/Input";
-import Select from "../Form/Select";
 import Submit from "../Form/Submit";
 import Textarea from "../Form/Textarea";
-import Form from "../Form/Form";
-import Full from "../Common/Full";
-
+import Discard from "../Form/Discard";
+import Select from "../Form/Select";
+import Checkbox from "../Form/Checkbox";
 const categorOptions = [
     { value: "", text: "Select a category" },
     { value: "personal", text: "Personal" },
@@ -27,21 +25,21 @@ const priorityOptions = [
     { value: "high", text: "High" },
 ];
 
-function FormComponent() {
+function Edit({ todo, setEditMode }) {
     const { mutate } = useSWRConfig();
-    // inputs
-    const [title, setTitle] = useState("");
-    const [date, setDate] = useState("");
-    const [description, setDescription] = useState("");
-    const [priority, setPriority] = useState("");
-    const [category, setCategory] = useState("");
 
     const [additional, setAdditional] = useState(false);
+
+    const [title, setTitle] = useState(todo.title);
+    const [date, setDate] = useState(todo.date);
+    const [description, setDescription] = useState(todo.description);
+    const [priority, setPriority] = useState(todo.priority);
+    const [category, setCategory] = useState(todo.category);
 
     async function handleSubmit(e) {
         e.preventDefault();
 
-        if (!title.trim() || !date.trim() === "") {
+        if (!title.trim() || !date.trim()) {
             return;
         }
 
@@ -53,23 +51,15 @@ function FormComponent() {
             category,
         };
 
-        fetch("/api/todos", {
-            method: "POST",
+        await fetch(`/api/todos/${todo._id}`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setTitle("");
-                setDate("");
-                setDescription("");
-                setPriority("");
-                setCategory("");
-                mutate("/api/todos");
-            })
-            .catch((err) => console.log(err));
+        });
+        setEditMode(false);
+        mutate("/api/todos");
     }
     return (
         <Wrapper>
@@ -85,7 +75,6 @@ function FormComponent() {
                         placeholder="Enter a date"
                         date={date}
                         setDate={setDate}
-                        className={"sm:w-80"}
                         required
                     />
                 </FormWrapper>
@@ -112,17 +101,20 @@ function FormComponent() {
                         </FormWrapper>
                     </React.Fragment>
                 )}
-                <FormWrapper type={4}>
+                <FormWrapper type={4} className={"w-full"}>
                     <Checkbox
                         check={additional}
                         setCheck={setAdditional}
                         label="Additional Details"
                     />
-                    <Submit className={"sm:w-80"}>Add Todo</Submit>
+                    <FormWrapper type={4} className={"w-full"}>
+                        <Discard>Discard</Discard>
+                        <Submit>SubmitChanges</Submit>
+                    </FormWrapper>
                 </FormWrapper>
             </Form>
         </Wrapper>
     );
 }
 
-export default FormComponent;
+export default Edit;
