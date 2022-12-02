@@ -2,12 +2,9 @@ import React, { useEffect } from "react";
 import Head from "next/head";
 import Navbar from "../components/Navbar/Navbar";
 import Todo from "../components/Todo/index";
-import { requirePageAuth } from "../utils/requireAuth";
-export default function todo() {
-    useEffect(() => {
-        requirePageAuth();
-    }, []);
+import { getSession } from "next-auth/react";
 
+export default function todo() {
     return (
         <React.Fragment>
             <Head>
@@ -15,7 +12,22 @@ export default function todo() {
             </Head>
             <Navbar />
             <Todo />
-
         </React.Fragment>
     );
+}
+
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/auth/login",
+                permanent: false,
+            },
+            props: {},
+        };
+    }
+    return {
+        props: {},
+    };
 }

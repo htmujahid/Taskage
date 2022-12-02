@@ -17,7 +17,8 @@ import Heading from "../Typography/Heading";
 import Wrapper from "./Wrapper";
 import FullScreen from "../Common/FullScreen";
 import Full from "../Common/Full";
-
+import GoogleSignIn from "./GoogleSignIn";
+import Separator from "./Separator";
 function index() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -50,7 +51,11 @@ function index() {
         <FullScreen>
             <Brandmark className={"mb-32 opacity-50"} />
             <Wrapper>
-                <Heading type={1}>Sign in to your account</Heading>
+                <Heading type={1} className="mb-6 text-center">
+                    Log in to your account
+                </Heading>
+                <GoogleSignIn />
+                <Separator />
                 <Form onSubmit={handleSubmit}>
                     <Email
                         email={email}

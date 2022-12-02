@@ -15,6 +15,8 @@ import Heading from "../Typography/Heading";
 import Wrapper from "./Wrapper";
 import FullScreen from "../Common/FullScreen";
 import Full from "../Common/Full";
+import GoogleSignIn from "./GoogleSignIn";
+import Separator from "./Separator";
 
 function SignupComponent() {
     const [username, setUsername] = useState("");
@@ -74,7 +76,11 @@ function SignupComponent() {
             <Brandmark className={"mb-32 opacity-50"} />
 
             <Wrapper>
-                <Heading type={1}>Sign up to your account</Heading>
+                <Heading type={1} className="mb-6 text-center">
+                    Sign up to your account
+                </Heading>
+                <GoogleSignIn />
+                <Separator />
                 <Form onSubmit={handleSubmit}>
                     <Input
                         text={username}
