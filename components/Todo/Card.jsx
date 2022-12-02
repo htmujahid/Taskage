@@ -11,16 +11,19 @@ import Text from "../Typography/Text";
 import Button from "../Widgets/Button";
 import Paragraph from "../Typography/Paragraph";
 import Full from "../Common/Full";
+import CardLoading from "../Common/CardLoading";
 
 function Card({ todo }) {
     const [detailed, setDetailed] = useState(false);
     const [controls, setControls] = useState(false);
     const [isCompleted, setIsCompleted] = useState(todo.completed_at !== null);
     const [editMode, setEditMode] = useState(false);
+    const [isCardLoading, setIsCardLoading] = useState(false);
 
     const { mutate } = useSWRConfig();
 
     async function handleCompletion() {
+        setIsCardLoading(true);
         await fetch(`/api/todos/${todo._id}`, {
             method: "PATCH",
             headers: {
@@ -30,6 +33,7 @@ function Card({ todo }) {
                 completed_at: isCompleted ? null : new Date().toISOString(),
             }),
         });
+        setIsCardLoading(false);
         mutate("/api/todos");
         setIsCompleted((prev) => !prev);
     }
@@ -51,12 +55,14 @@ function Card({ todo }) {
                             onChange={handleCompletion}
                         />
                     </Absolute>
+                    {isCardLoading && <CardLoading />}
                     {controls && (
                         <Absolute right={14} className={"right-14"}>
                             <Controls
                                 _id={todo._id}
                                 setEditMode={setEditMode}
                                 setControls={setControls}
+                                setIsCardLoading={setIsCardLoading}
                             />
                         </Absolute>
                     )}

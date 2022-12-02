@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Head from "next/head";
 import Navbar from "../components/Navbar/Navbar";
 import Reading from "../components/Readings/index";
-import { getSession } from "../utils/requireAuth";
+import { getSession } from "next-auth/react";
 
 export default function readings() {
     return (

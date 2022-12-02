@@ -9,6 +9,7 @@ import FlexWrapper from "../Layouts/FlexWrapper";
 import Text from "../Typography/Text";
 import Button from "../Widgets/Button";
 import Image from "next/image";
+import CardLoading from "../Common/CardLoading";
 
 function Card({ habit }) {
     const { mutate } = useSWRConfig();
@@ -16,7 +17,10 @@ function Card({ habit }) {
     const [isUpdated, setIsUpdated] = useState(habit.updated_at);
     const [controls, setControls] = useState(false);
     const [editMode, setEditMode] = useState(false);
+    const [isCardLoading, setIsCardLoading] = useState(false);
+
     async function handleUpdation() {
+        setIsCardLoading(true);
         await fetch(`/api/habits/${habit._id}`, {
             method: "PATCH",
             headers: {
@@ -27,6 +31,7 @@ function Card({ habit }) {
                 completed_at: habit.completed_at,
             }),
         });
+        setIsCardLoading(false);
         mutate("/api/habits");
         setIsUpdated(!isUpdated);
     }
@@ -47,6 +52,7 @@ function Card({ habit }) {
                             onChange={handleUpdation}
                         />
                     </Absolute>
+                    {isCardLoading && <CardLoading />}
                     {controls && (
                         <Absolute right={14} className={"right-14"}>
                             <Controls
@@ -55,6 +61,7 @@ function Card({ habit }) {
                                 setControls={setControls}
                                 isCompleted={isCompleted}
                                 habit={habit}
+                                setIsCardLoading={setIsCardLoading}
                             />
                         </Absolute>
                     )}

@@ -19,6 +19,7 @@ function Edit({ habit, setEditMode }) {
     const { mutate } = useSWRConfig();
     const [title, setTitle] = useState(habit.title);
     const [routine, setRoutine] = useState(habit.routine);
+    const [isLoading, setIsLoading] = useState(false);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -26,6 +27,7 @@ function Edit({ habit, setEditMode }) {
         if (!title.trim() || !routine.trim()) {
             return;
         }
+        setIsLoading(true);
         await fetch(`/api/habits/${habit._id}`, {
             method: "PUT",
             headers: {
@@ -37,11 +39,15 @@ function Edit({ habit, setEditMode }) {
             }),
         })
             .then((res) => res.json())
-            .then((data) => {
-                mutate("/api/habits");
+            .then((data) => {})
+            .catch((err) => console.log(err))
+            .finally(() => {
+                setIsLoading(false);
                 setEditMode(false);
+                mutate("/api/habits");
             });
     }
+
     return (
         <Wrapper>
             <Form onSubmit={handleSubmit}>
@@ -63,12 +69,10 @@ function Edit({ habit, setEditMode }) {
                     </Full>
                     <FormWrapper type={4} className={"w-full"}>
                         <Full className="w-full">
-                            <Discard onClick={() => setEditMode(false)}>
-                                Discard
-                            </Discard>
+                            <Discard setEditMode={setEditMode}>Discard</Discard>
                         </Full>
                         <Full>
-                            <Submit>Track Habit</Submit>
+                            <Submit isLoading={isLoading}>Track Habit</Submit>
                         </Full>
                     </FormWrapper>
                 </FormWrapper>

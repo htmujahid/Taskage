@@ -18,6 +18,7 @@ function FormComponent() {
         minutes: 0,
         seconds: 0,
     });
+    const [isLoading, setIsLoading] = useState(false);
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -29,7 +30,7 @@ function FormComponent() {
             title,
             time,
         };
-
+        setIsLoading(true);
         fetch("/api/scheduler", {
             method: "POST",
             headers: {
@@ -45,6 +46,7 @@ function FormComponent() {
                     minutes: 0,
                     seconds: 0,
                 });
+                setIsLoading(false);
             })
             .catch((err) => console.log(err))
             .finally(() => {
@@ -73,7 +75,9 @@ function FormComponent() {
                         className={"mb-0"}
                         required
                     />
-                    <Submit className={"w-min"}>Start</Submit>
+                    <Submit className={"w-min"} isLoading={isLoading}>
+                        Start
+                    </Submit>
                 </FormWrapper>
             </Form>
         </Wrapper>

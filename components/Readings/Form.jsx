@@ -25,6 +25,7 @@ function FormComponent() {
     const [endDate, setEndDate] = useState("");
     const [author, setAuthor] = useState("");
     const [type, setType] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const colors = [
         "##eab308",
@@ -45,6 +46,7 @@ function FormComponent() {
         if (!title.trim() || !author.trim() || !status.trim()) {
             return;
         }
+        setIsLoading(true);
         await fetch("/api/readings", {
             method: "POST",
             headers: {
@@ -68,10 +70,12 @@ function FormComponent() {
                 setStartDate("");
                 setEndDate("");
                 setStatus("");
-                mutate("/api/readings");
             })
             .catch((err) => console.log(err))
-            .finally(() => {});
+            .finally(() => {
+                setIsLoading(false);
+                mutate("/api/readings");
+            });
     }
     return (
         <Wrapper>
@@ -114,7 +118,7 @@ function FormComponent() {
                         ></Select>
                     </Full>
                     <Full>
-                        <Submit>Add Book</Submit>
+                        <Submit isLoading={isLoading}>Add Book</Submit>
                     </Full>
                 </FormWrapper>
             </Form>

@@ -35,6 +35,7 @@ function FormComponent() {
     const [description, setDescription] = useState("");
     const [priority, setPriority] = useState("");
     const [category, setCategory] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const [additional, setAdditional] = useState(false);
 
@@ -52,7 +53,7 @@ function FormComponent() {
             priority,
             category,
         };
-
+        setIsLoading(true);
         fetch("/api/todos", {
             method: "POST",
             headers: {
@@ -67,9 +68,12 @@ function FormComponent() {
                 setDescription("");
                 setPriority("");
                 setCategory("");
-                mutate("/api/todos");
             })
-            .catch((err) => console.log(err));
+            .catch((err) => console.log(err))
+            .finally(() => {
+                setIsLoading(false);
+                mutate("/api/todos");
+            });
     }
     return (
         <Wrapper>
@@ -118,7 +122,9 @@ function FormComponent() {
                         setCheck={setAdditional}
                         label="Additional Details"
                     />
-                    <Submit className={"sm:w-80"}>Add Todo</Submit>
+                    <Submit className={"sm:w-80"} isLoading={isLoading}>
+                        Add Todo
+                    </Submit>
                 </FormWrapper>
             </Form>
         </Wrapper>

@@ -14,6 +14,7 @@ import Button from "../Widgets/Button";
 import Checkbox from "../Form/Checkbox";
 import Text from "../Typography/Text";
 import Image from "next/image";
+import CardLoading from "../Common/CardLoading";
 
 function Card({ task }) {
     const [isRunning, setIsRunning] = useState(
@@ -29,10 +30,12 @@ function Card({ task }) {
 
     const [controls, setControls] = useState(false);
     const [editMode, setEditMode] = useState(false);
+    const [isCardLoading, setIsCardLoading] = useState(false);
 
     const { mutate } = useSWRConfig();
 
     async function handleCompletion() {
+        setIsCardLoading(true);
         let updatedInterval = task.intervals;
         if (isCompleted) {
             const newInterval = {
@@ -58,6 +61,7 @@ function Card({ task }) {
                 completed_at: !isCompleted ? new Date().toISOString() : null,
             }),
         });
+        setIsCardLoading(false);
         setIsCompleted(!isCompleted);
         mutate("/api/scheduler");
     }
@@ -82,6 +86,7 @@ function Card({ task }) {
                             onChange={handleCompletion}
                         />
                     </Absolute>
+                    {isCardLoading && <CardLoading />}
                     {controls && (
                         <Absolute right={14} className={"right-14"}>
                             <Controls
@@ -91,6 +96,7 @@ function Card({ task }) {
                                 setEditMode={setEditMode}
                                 isRunning={isRunning}
                                 setIsRunning={setIsRunning}
+                                setIsCardLoading={setIsCardLoading}
                             />
                         </Absolute>
                     )}

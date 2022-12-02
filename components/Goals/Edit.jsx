@@ -14,6 +14,7 @@ function Edit({ goal, setEditMode }) {
     const [startDate, setStartDate] = useState(goal.start_date);
     const [endDate, setEndDate] = useState(goal.end_date);
     const [title, setTitle] = useState(goal.title);
+    const [isLoading, setIsLoading] = useState(false);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -25,6 +26,7 @@ function Edit({ goal, setEditMode }) {
         ) {
             return;
         }
+        setIsLoading(true);
         await fetch(`/api/goals/${goal._id}`, {
             method: "PUT",
             headers: {
@@ -37,7 +39,10 @@ function Edit({ goal, setEditMode }) {
             }),
         })
             .then((res) => res.json())
-            .then((data) => {
+            .then((data) => {})
+            .catch((err) => console.log(err))
+            .finally(() => {
+                setIsLoading(false);
                 setEditMode(false);
                 mutate("/api/goals");
             });
@@ -70,8 +75,8 @@ function Edit({ goal, setEditMode }) {
                         />
                     </Full>
                     <FormWrapper type={2} className={"w-full"}>
-                        <Discard>Discard</Discard>
-                        <Submit>Add Goal</Submit>
+                        <Discard setEditMode={setEditMode}>Discard</Discard>
+                        <Submit isLoading={isLoading}>Add Goal</Submit>
                     </FormWrapper>
                 </FormWrapper>
             </Form>

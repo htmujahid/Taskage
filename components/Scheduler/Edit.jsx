@@ -13,6 +13,7 @@ function Edit({ task, setEditMode, setIsTime }) {
     const { mutate } = useSWRConfig();
     const [title, setTitle] = useState(task.title);
     const [time, setTime] = useState(task.time);
+    const [isLoading, setIsLoading] = useState(false);
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -24,7 +25,7 @@ function Edit({ task, setEditMode, setIsTime }) {
             title,
             time,
         };
-
+        setIsLoading(true);
         fetch(`/api/scheduler/${task._id}`, {
             method: "PUT",
             headers: {
@@ -33,7 +34,7 @@ function Edit({ task, setEditMode, setIsTime }) {
             body: JSON.stringify(data),
         })
             .then((res) => res.json())
-            .then((data) => console.log("data"))
+            .then((data) => {})
             .catch((err) => console.log(err))
             .finally(() => {
                 if (time.hours != 0 || time.minutes != 0 || time.seconds != 0) {
@@ -42,9 +43,10 @@ function Edit({ task, setEditMode, setIsTime }) {
                     setIsTime(false);
                 }
                 setShowTime(false);
+                setIsLoading(false);
+                setEditMode(false);
                 mutate("/api/scheduler");
             });
-        setEditMode(false);
     }
 
     return (
@@ -70,8 +72,8 @@ function Edit({ task, setEditMode, setIsTime }) {
                         />
                     </FormWrapper>
                     <FormWrapper type={4} className={"w-full"}>
-                        <Discard>Discard</Discard>
-                        <Submit>SubmitChanges</Submit>
+                        <Discard setEditMode={setEditMode}>Discard</Discard>
+                        <Submit isLoading={isLoading}>SubmitChanges</Submit>
                     </FormWrapper>
                 </FormWrapper>
             </Form>

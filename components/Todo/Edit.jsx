@@ -35,6 +35,7 @@ function Edit({ todo, setEditMode }) {
     const [description, setDescription] = useState(todo.description);
     const [priority, setPriority] = useState(todo.priority);
     const [category, setCategory] = useState(todo.category);
+    const [isLoading, setIsLoading] = useState(false);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -50,14 +51,25 @@ function Edit({ todo, setEditMode }) {
             priority,
             category,
         };
-
+        setIsLoading(true);
         await fetch(`/api/todos/${todo._id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
-        });
+        })
+            .then((res) => res.json())
+            .then((data) => {})
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                mutate("/api/todos");
+                setEditMode(false);
+            });
+
+        setIsLoading(false);
         setEditMode(false);
         mutate("/api/todos");
     }
@@ -75,6 +87,7 @@ function Edit({ todo, setEditMode }) {
                         placeholder="Enter a date"
                         date={date}
                         setDate={setDate}
+                        className={"sm:w-80"}
                         required
                     />
                 </FormWrapper>
@@ -108,8 +121,8 @@ function Edit({ todo, setEditMode }) {
                         label="Additional Details"
                     />
                     <FormWrapper type={4} className={"w-full"}>
-                        <Discard>Discard</Discard>
-                        <Submit>SubmitChanges</Submit>
+                        <Discard setEditMode={setEditMode}>Discard</Discard>
+                        <Submit isLoading={isLoading}>SubmitChanges</Submit>
                     </FormWrapper>
                 </FormWrapper>
             </Form>

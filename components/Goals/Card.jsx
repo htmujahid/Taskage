@@ -9,13 +9,16 @@ import Text from "../Typography/Text";
 import Input from "../Form/Input";
 import Checkbox from "../Form/Checkbox";
 import Image from "next/image";
+import CardLoading from "../Common/CardLoading";
 
 function Card({ goal }) {
     const [isCompleted, setIsCompleted] = useState(goal.completed_at);
     const [controls, setControls] = useState(false);
     const [editMode, setEditMode] = useState(false);
+    const [isCardLoading, setIsCardLoading] = useState(false);
 
     async function handleCompletion() {
+        setIsCardLoading(true);
         await fetch(`/api/goals/${goal._id}`, {
             method: "PATCH",
             headers: {
@@ -27,6 +30,7 @@ function Card({ goal }) {
         })
             .then((res) => res.json())
             .then((data) => {
+                setIsCardLoading(false);
                 setIsCompleted(!isCompleted);
             });
     }
@@ -47,12 +51,14 @@ function Card({ goal }) {
                             onChange={handleCompletion}
                         />
                     </Absolute>
+                    {isCardLoading && <CardLoading />}
                     {controls && (
                         <Absolute right={14} className={"right-14"}>
                             <Controls
                                 _id={goal._id}
                                 setEditMode={setEditMode}
                                 setControls={setControls}
+                                setIsCardLoading={setIsCardLoading}
                             />
                         </Absolute>
                     )}

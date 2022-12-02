@@ -24,6 +24,7 @@ function SignupComponent() {
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
     const [terms, setTerms] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const router = useRouter();
     async function handleSubmit(e) {
@@ -47,7 +48,7 @@ function SignupComponent() {
             email,
             password,
         };
-
+        setIsLoading(true);
         await fetch("/api/auth/signup", {
             method: "POST",
             headers: {
@@ -55,6 +56,7 @@ function SignupComponent() {
             },
             body: JSON.stringify(user),
         }).then((res) => {
+            setIsLoading(false);
             if (res.status === 201) {
                 setUsername("");
                 setEmail("");
@@ -113,7 +115,7 @@ function SignupComponent() {
                         required
                     />
                     <Full className={"my-3"}>
-                        <Submit>Sign up</Submit>
+                        <Submit isLoading={isLoading}>Sign up</Submit>
                     </Full>
                     <Text type={1}>
                         Already have an account?{" "}

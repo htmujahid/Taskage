@@ -8,14 +8,17 @@ function Controls({
     setEditMode,
     setIsRunning,
     isRunning,
+    setIsCardLoading,
 }) {
     const { mutate } = useSWRConfig();
 
     async function handleDelete() {
+        setIsCardLoading(true);
         await fetch(`/api/scheduler/${task._id}`, {
             method: "DELETE",
         });
         mutate("/api/scheduler");
+        setIsCardLoading(false);
     }
 
     async function handlePlay() {
@@ -30,6 +33,7 @@ function Controls({
             };
             updatedInterval.push(newInterval);
         }
+        setIsCardLoading(true);
         await fetch(`/api/scheduler/${task._id}`, {
             method: "PATCH",
             headers: {
@@ -40,6 +44,7 @@ function Controls({
                 completed_at: null,
             }),
         });
+        setIsCardLoading(false);
         setIsRunning(!isRunning);
         setControls(false);
         mutate("/api/scheduler");

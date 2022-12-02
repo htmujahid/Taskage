@@ -23,6 +23,7 @@ function index() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [remember, setRemember] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -35,13 +36,13 @@ function index() {
             email,
             password,
         };
-
+        setIsLoading(true);
         const result = await signIn("credentials", {
             redirect: false,
             email: user.email,
             password: user.password,
         });
-
+        setIsLoading(false);
         if (result.error) {
             alert("Invalid credentials");
         }
@@ -83,7 +84,7 @@ function index() {
                         </Full>
                     </FormWrapper>
                     <Full className="w-full mb-3">
-                        <Submit>Log in</Submit>
+                        <Submit isLoading={isLoading}>Log in</Submit>
                     </Full>
                     <Full>
                         <Text type={2}>

@@ -14,6 +14,7 @@ function FormComponent() {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [title, setTitle] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -21,6 +22,7 @@ function FormComponent() {
         if (!title.trim() || !startDate.trim() || !endDate.trim()) {
             return;
         }
+        setIsLoading(true);
         fetch("/api/goals", {
             method: "POST",
             headers: {
@@ -40,6 +42,7 @@ function FormComponent() {
             })
             .catch((err) => console.log(err))
             .finally(() => {
+                setIsLoading(false);
                 mutate("/api/goals");
             });
     }
@@ -71,7 +74,7 @@ function FormComponent() {
                         />
                     </Full>
                     <Full>
-                        <Submit>Add Goal</Submit>
+                        <Submit isLoading={isLoading}>Add Goal</Submit>
                     </Full>
                 </FormWrapper>
             </Form>

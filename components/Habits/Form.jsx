@@ -17,13 +17,14 @@ function FormComponent() {
     const { mutate } = useSWRConfig();
     const [title, setTitle] = useState("");
     const [routine, setRoutine] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     function handleSubmit(e) {
         e.preventDefault();
         if (!title.trim() || !routine.trim()) {
             return;
         }
-
+        setIsLoading(true);
         fetch("/api/habits", {
             method: "POST",
             headers: {
@@ -38,10 +39,12 @@ function FormComponent() {
             .then((data) => {
                 setTitle("");
                 setRoutine("");
-                mutate("/api/habits");
             })
             .catch((err) => console.log(err))
-            .finally(() => {});
+            .finally(() => {
+                setIsLoading(false);
+                mutate("/api/habits");
+            });
     }
     return (
         <Wrapper>
@@ -63,7 +66,7 @@ function FormComponent() {
                         ></Select>
                     </Full>
                     <Full>
-                        <Submit>Track Habit</Submit>
+                        <Submit isLoading={isLoading}>Track Habit</Submit>
                     </Full>
                 </FormWrapper>
             </Form>
