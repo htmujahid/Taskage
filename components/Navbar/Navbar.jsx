@@ -55,12 +55,11 @@ function Navbar() {
                     {status !== "loading" && !session && (
                         <div className="flex items-center gap-4">
                             <Link
-                                href="/auth/signup"
+                                href="/auth/signin"
                                 className="inline-block px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-gray-100 duration-100 hover:bg-opacity-90 "
                             >
                                 Get Started
                             </Link>
-                            {/* <Link href="/auth/login" className="inline-block text-sm font-medium text-blue-600 hover:opacity-90">Login</Link> */}
                         </div>
                     )}
                     {status !== "loading" && session && (
