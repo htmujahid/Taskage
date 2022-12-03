@@ -11,7 +11,7 @@ function Submit({ children, className, isLoading, ...props }) {
                 <span className="">
                     <svg
                         role="status"
-                        class="inline w-4 h-4 text-white animate-spin"
+                        className="inline w-4 h-4 text-white animate-spin"
                         viewBox="0 0 100 101"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"

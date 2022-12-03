@@ -2,21 +2,27 @@ import NextAuth from "next-auth";
 
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import EmailProvider from "next-auth/providers/email";
+
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 
 import { client } from "../../../lib/mongodb";
 
 import { verifyPassword } from "../../../lib/auth";
+
 export default NextAuth({
     session: {
         jwt: true,
     },
     pages: {
-        signIn: "/auth/login",
-        signOut: "/auth/login",
-        error: "/auth/login",
-        verifyRequest: "/auth/login",
-        newUser: "/auth/login",
+        signIn: "/auth/signin",
+        signOut: "/auth/signin",
+        error: "/auth/signin",
+        verifyRequest: "/auth/signin",
+        newUser: "/auth/signin",
     },
+    adapter: MongoDBAdapter(client.connect()),
+
     // Configure one or more authentication providers
     providers: [
         CredentialsProvider({
@@ -56,6 +62,9 @@ export default NextAuth({
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        }),
+        EmailProvider({
+            server: process.env.EMAIL_SERVER,
         }),
     ],
     secret: process.env.NEXT_PUBLIC_SECRET,
