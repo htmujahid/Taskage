@@ -13,7 +13,7 @@ import FullScreen from "../Common/FullScreen";
 import Full from "../Common/Full";
 import GoogleSignIn from "./GoogleSignIn";
 import Separator from "./Separator";
-import Notify from "./notify";
+import Notify from "./Notify";
 
 function Signin() {
     const [email, setEmail] = useState("");
