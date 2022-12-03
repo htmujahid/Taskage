@@ -13,7 +13,7 @@ export default function signin() {
     return (
         <React.Fragment>
             <Head>
-                <title>Taskage - Login</title>
+                <title>Taskage - Signin</title>
             </Head>
             <SigninComponent />
         </React.Fragment>
