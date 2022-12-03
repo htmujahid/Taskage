@@ -11,10 +11,6 @@ import { client } from "../../../lib/mongodb";
 import { verifyPassword } from "../../../lib/auth";
 
 export default NextAuth({
-    session: {
-        jwt: true,
-    },
-    
     pages: {
         signIn: "/auth/signin",
     },
