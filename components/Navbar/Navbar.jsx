@@ -41,6 +41,7 @@ function Navbar() {
         signOut();
     }
 
+<<<<<<< HEAD
     return (
         <nav>
             <div className="border-gray-200 ">
@@ -76,6 +77,39 @@ function Navbar() {
                             </button>
                         </div>
                     )}
+=======
+  return (
+    <nav>
+        <div className="border-gray-200 ">
+            <div className="flex flex-wrap justify-center sm:justify-between items-center gap-4 mx-auto max-w-screen-xl px-4 md:px-6 py-2.5">
+                <Link href="/" className="flex items-center">
+                    <img src="/assets/icons/logo-black.svg" className="h-5 mr-3 opacity-50" alt="Flowbite Logo" />
+                </Link>
+                { status !== 'loading' && !session && (
+                    <div className="flex items-center gap-4">
+                        <Link href="/auth/signin" className="inline-block px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-gray-100 duration-100 hover:bg-opacity-90 ">Get Started</Link>
+//                         <Link href="/auth/login" className="inline-block text-sm font-medium text-blue-600 hover:opacity-90">Login</Link>
+                    </div>
+                )}
+                { status !== 'loading' && session && (
+                    <div className='flex items-center gap-4'>
+                        <h6 className="text-gray-900">{session.user.email.split('@')[0]}</h6>
+                        <button className="inline-block text-sm font-medium text-blue-600 hover:opacity-90" onClick={signoutHandler}>Sign Out</button>
+                    </div>
+                )}
+            </div>
+        </div>
+        <div className="border shadow">
+            <div className="max-w-screen-xl px-4 py-3 mx-auto md:px-6">
+                <div className="flex items-center">
+                    <ul className="flex flex-row mt-0 mr-6 space-x-8 font-medium overflow-x-auto hide-scrollbar">
+                        {navbarList.map(item => (
+                            <li key={item.path}>
+                                <Link href={item.path} className={`text-gray-900 ${item.path === path? 'font-semibold':'hover:underline'}`}>{item.name}</Link>
+                            </li>
+                        ))}
+                    </ul>
+>>>>>>> 7f17567b3b16e7bdf913ade3b052130f1886dfc4
                 </div>
             </div>
             <div className="border shadow">
@@ -104,4 +138,8 @@ function Navbar() {
     );
 }
 
+<<<<<<< HEAD
 export default Navbar;
+=======
+export default Navbar
+>>>>>>> 7f17567b3b16e7bdf913ade3b052130f1886dfc4

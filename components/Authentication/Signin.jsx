@@ -30,7 +30,7 @@ function Signin() {
         setIsLoading(true);
         const result = await signIn("email", {
             redirect: false,
-            email,
+            email: email,
         });
         setIsLoading(false);
         setNotify(true);

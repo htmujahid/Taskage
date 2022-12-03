@@ -14,6 +14,7 @@ export default NextAuth({
     pages: {
         signIn: "/auth/signin",
     },
+    
     adapter: MongoDBAdapter(client.connect()),
     providers: [
         GoogleProvider({
