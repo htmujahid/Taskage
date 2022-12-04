@@ -11,10 +11,10 @@ import Button from "../Widgets/Button";
 import Image from "next/image";
 import CardLoading from "../Common/CardLoading";
 
-function Card({ habit }) {
+function Card({ habit, accomplished }) {
     const { mutate } = useSWRConfig();
     const [isCompleted, setIsCompleted] = useState(false);
-    const [isUpdated, setIsUpdated] = useState(habit.updated_at);
+    const [isUpdated, setIsUpdated] = useState(accomplished);
     const [controls, setControls] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [isCardLoading, setIsCardLoading] = useState(false);

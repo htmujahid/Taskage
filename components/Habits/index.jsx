@@ -92,7 +92,11 @@ function index() {
                 <div className="my-6">
                     <div className="flex flex-col gap-6">
                         {unaccomplished.map((habit) => (
-                            <Card key={habit._id} habit={habit} />
+                            <Card
+                                key={habit._id}
+                                habit={habit}
+                                accomplished={false}
+                            />
                         ))}
                     </div>
                 </div>
@@ -110,7 +114,11 @@ function index() {
                 <div className="my-6">
                     <div className="flex flex-col gap-6">
                         {accomplished.map((habit) => (
-                            <Card key={habit._id} habit={habit} />
+                            <Card
+                                key={habit._id}
+                                habit={habit}
+                                accomplished={true}
+                            />
                         ))}
                     </div>
                 </div>

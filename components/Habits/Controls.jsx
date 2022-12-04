@@ -41,9 +41,15 @@ function Controls({
                 updated_at: habit.updated_at,
                 completed_at: isCompleted ? null : new Date().toISOString(),
             }),
-        });
-        setIsCardLoading(false);
-        setControls(false);
+        })
+            .then((res) => res.json())
+            .then((data) => {})
+            .catch((err) => console.log(err))
+            .finally(() => {
+                setIsCardLoading(false);
+                setControls(false);
+                mutate("/api/habits");
+            });
     }
 
     return (
