@@ -6,11 +6,12 @@ import GoalCard from "./GoalCard";
 import NoteCard from "./NoteCard";
 import ReadingCard from "./ReadingCard";
 import useSWR from "swr";
+import Skelton from "./Skelton";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 function index() {
     const { data, error } = useSWR("/api/summary", fetcher);
     if (error) return <div>failed to load</div>;
-    if (!data) return <div>loading...</div>;
+    if (!data) return <Skelton />;
     return (
         <div className="my-6">
             <div className="grid grid-cols-1 gap-4 container-lg mx-auto">

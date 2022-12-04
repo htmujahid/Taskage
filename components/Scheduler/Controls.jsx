@@ -43,11 +43,16 @@ function Controls({
                 intervals: updatedInterval,
                 completed_at: null,
             }),
-        });
-        setIsCardLoading(false);
-        setIsRunning(!isRunning);
-        setControls(false);
-        mutate("/api/scheduler");
+        })
+            .then((res) => res.json())
+            .then((data) => {})
+            .catch((err) => console.log(err))
+            .finally(() => {
+                setIsCardLoading(false);
+                setIsRunning(!isRunning);
+                setControls(false);
+                mutate("/api/scheduler");
+            });
     }
 
     function handleEdit() {

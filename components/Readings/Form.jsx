@@ -13,9 +13,9 @@ import Full from "../Common/Full";
 
 const statusOptions = [
     { value: "", text: "Select a status" },
-    { value: "haveRead", text: "Have Read" },
+    { value: "Have Read", text: "Have Read" },
     { value: "Reading", text: "Reading" },
-    { value: "toRead", text: "To Read" },
+    { value: "To Read", text: "To Read" },
 ];
 function FormComponent() {
     const { mutate } = useSWRConfig();

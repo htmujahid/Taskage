@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "./Card";
 import Form from "./Form";
 import useSWR from "swr";
+import Skelton from "./Skelton";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 function index() {
@@ -80,7 +81,7 @@ function index() {
     }, [habits]);
 
     if (error) return <div>failed to load</div>;
-    if (!data) return <div>loading...</div>;
+    if (!data) return <Skelton />;
 
     return (
         <React.Fragment>
@@ -101,6 +102,10 @@ function index() {
                     <div className="w-full border border-gray-300 h-min"></div>
                 )}
             </div>
+
+            {habits.length === 0 && (
+                <div className="text-center text-gray-500">No habits yet</div>
+            )}
             {accomplished.length > 0 && (
                 <div className="my-6">
                     <div className="flex flex-col gap-6">

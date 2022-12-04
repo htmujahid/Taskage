@@ -8,9 +8,14 @@ function Controls({ _id, setEditMode, setControls, setIsCardLoading }) {
         setIsCardLoading(true);
         await fetch(`/api/todos/${_id}`, {
             method: "DELETE",
-        });
-        setIsCardLoading(false);
-        mutate("/api/todos");
+        })
+            .then((res) => res.json())
+            .then((data) => {})
+            .catch((err) => console.log(err))
+            .finally(() => {
+                setIsCardLoading(false);
+                mutate("/api/todos");
+            });
     }
 
     function handleEdit() {

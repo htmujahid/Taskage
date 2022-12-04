@@ -12,8 +12,8 @@ function GoalCard({ count }) {
                     <div>
                         <Image
                             src="/assets/images/target.png"
-                            width={50}
-                            height={50}
+                            width={48}
+                            height={48}
                             alt="target"
                         />
                     </div>
@@ -24,8 +24,8 @@ function GoalCard({ count }) {
                         <Link href="/goals">
                             <Image
                                 src="/assets/icons/linking.svg"
-                                width={20}
-                                height={20}
+                                width={16}
+                                height={16}
                                 alt="linking"
                             />
                         </Link>

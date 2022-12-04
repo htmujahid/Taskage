@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { useSession, signOut } from "next-auth/react";
+import Image from "next/image";
 
 function Navbar() {
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
+
     const router = useRouter();
     const path = router.pathname;
 
@@ -63,16 +66,43 @@ function Navbar() {
                         </div>
                     )}
                     {status !== "loading" && session && (
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-4 relative">
                             <h6 className="text-gray-900">
-                                {session.user.email.split("@")[0]}
+                                Hi, {session.user.name.split(" ")[0]}
                             </h6>
-                            <button
-                                className="inline-block text-sm font-medium text-blue-600 hover:opacity-90"
-                                onClick={signoutHandler}
-                            >
-                                Sign Out
-                            </button>
+                            <img
+                                src={session.user.image}
+                                alt="image"
+                                width={32}
+                                height={32}
+                                className="rounded-full"
+                                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                            />
+                            {isProfileOpen && (
+                                <div
+                                    class="z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow absolute top-6 right-0"
+                                    id="user-dropdown"
+                                >
+                                    {/* <div class="px-4 py-3">
+                                    <span class="block text-sm text-gray-900">
+                                        {session.user.name}
+                                        </span>
+                                        <span class="block text-sm font-medium text-gray-500 truncate">
+                                        {session.user.email}
+                                    </span>
+                                </div> */}
+                                    <ul class="py-1">
+                                        <li class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                            <button
+                                                className=""
+                                                onClick={signoutHandler}
+                                            >
+                                                Sign Out
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>

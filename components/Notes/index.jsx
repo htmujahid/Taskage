@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Form from "./Form";
 import Card from "./Card";
-
+import PageLoading from "../Common/PageLoading";
 import useSWR from "swr";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -19,6 +19,8 @@ function index() {
         }
     }, [data]);
 
+    if (error) return <div>failed to load</div>;
+    if (!data) return <PageLoading />;
     return (
         <React.Fragment>
             <div className="container mx-auto my-10 flex flex-wrap justify-center sm:justify-start gap-6 max-w-[1300px] ">

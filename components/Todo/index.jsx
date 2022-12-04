@@ -3,6 +3,7 @@ import useSWR, { useSWRConfig } from "swr";
 
 import Card from "./Card";
 import Form from "./Form";
+import Skelton from "./Skelton";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -44,7 +45,7 @@ function index() {
     };
 
     if (error) return <div>failed to load</div>;
-    if (!data) return <div>loading...</div>;
+    if (!data) return <Skelton />;
     return (
         <React.Fragment>
             <div className="my-10">
@@ -65,6 +66,12 @@ function index() {
                     </select>
                 </div>
             </div>
+
+            {todos.length === 0 && (
+                <div className="text-center text-gray-500 my-6">
+                    No todos yet
+                </div>
+            )}
             {activeTodos.length > 0 && (
                 <div className="my-6">
                     <div className="flex flex-col gap-6">

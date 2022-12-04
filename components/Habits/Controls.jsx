@@ -15,9 +15,14 @@ function Controls({
         setIsCardLoading(true);
         await fetch(`/api/habits/${_id}`, {
             method: "DELETE",
-        });
-        setIsCardLoading(false);
-        mutate("/api/habits");
+        })
+            .then((res) => res.json())
+            .then((data) => {})
+            .catch((err) => console.log(err))
+            .finally(() => {
+                setIsCardLoading(false);
+                mutate("/api/habits");
+            });
     }
 
     function handleEdit() {

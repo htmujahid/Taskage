@@ -1,7 +1,27 @@
 import React from "react";
+import Navbar from "../../components/Navbar/Navbar";
+import { getSession } from "next-auth/react";
 
-function error() {
-    return <div>Something went wrong</div>;
+export default function error() {
+    return (
+        <React.Fragment>
+            <Navbar />
+            <p>Something went wrong</p>
+        </React.Fragment>
+    );
 }
 
-export default error;
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (session) {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            },
+        };
+    }
+    return {
+        props: {},
+    };
+}

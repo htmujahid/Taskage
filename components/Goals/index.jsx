@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import Form from "./Form";
 import useSWR from "swr";
+import Skelton from "./Skelton";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 function index() {
@@ -18,12 +19,16 @@ function index() {
     }, [data]);
 
     if (error) return <div>failed to load</div>;
-    if (!data) return <div>loading...</div>;
+    if (!data) return <Skelton />;
+
     return (
         <React.Fragment>
             <div className="my-10">
                 <Form />
             </div>
+            {goals.length === 0 && (
+                <div className="text-center text-gray-500">No goals yet</div>
+            )}
             <div className="my-6">
                 <div className="flex flex-col gap-6">
                     {goals &&
