@@ -33,6 +33,6 @@ export default NextAuth({
         //     from: "Noreply <noreplay@taskage.live",
         // }),
     ],
-    adapter: MongoDBAdapter(clientPromise),
+    // adapter: MongoDBAdapter(clientPromise),
     secret: process.env.NEXT_PUBLIC_SECRET,
 });
