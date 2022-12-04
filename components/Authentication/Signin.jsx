@@ -45,10 +45,10 @@ function Signin() {
             {!notify ? (
                 <Wrapper>
                     <Heading type={1} className="mb-6 text-center">
-                        Log in to your account
+                        Sign in to your account
                     </Heading>
                     <GoogleSignIn />
-                    <Separator />
+                    {/* <Separator />
                     <Form onSubmit={handleSubmit}>
                         <Email
                             email={email}
@@ -61,7 +61,7 @@ function Signin() {
                                 Continue with Email
                             </Submit>
                         </Full>
-                    </Form>
+                    </Form> */}
                 </Wrapper>
             ) : (
                 <Notify />
