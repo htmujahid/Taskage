@@ -6,7 +6,7 @@ import EmailProvider from "next-auth/providers/email";
 
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 
-import { client } from "../../../lib/mongodb";
+import { clientPromise } from "../../../lib/mongodb";
 
 import { verifyPassword } from "../../../lib/auth";
 
@@ -16,7 +16,6 @@ export default NextAuth({
         error: "/auth/error",
     },
 
-    adapter: MongoDBAdapter(client.connect()),
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
@@ -34,5 +33,6 @@ export default NextAuth({
         //     from: "Noreply <noreplay@taskage.live",
         // }),
     ],
+    adapter: MongoDBAdapter(clientPromise),
     secret: process.env.NEXT_PUBLIC_SECRET,
 });
