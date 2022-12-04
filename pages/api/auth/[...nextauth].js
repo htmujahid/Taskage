@@ -16,7 +16,7 @@ export default NextAuth({
         error: "/auth/error",
     },
 
-    // adapter: MongoDBAdapter(client.connect()),
+    adapter: MongoDBAdapter(client.connect()),
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
