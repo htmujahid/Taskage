@@ -10,7 +10,7 @@ function Skelton() {
                         <FlexWrapper type={1}>
                             <div>
                                 <svg
-                                    class="w-12 h-12 text-gray-200"
+                                    className="w-12 h-12 text-gray-200"
                                     xmlns="http://www.w3.org/2000/svg"
                                     aria-hidden="true"
                                     fill="currentColor"

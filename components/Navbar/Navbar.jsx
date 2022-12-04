@@ -80,19 +80,19 @@ function Navbar() {
                             />
                             {isProfileOpen && (
                                 <div
-                                    class="z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow absolute top-6 right-0"
+                                    className="z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow absolute top-6 right-0"
                                     id="user-dropdown"
                                 >
-                                    {/* <div class="px-4 py-3">
-                                    <span class="block text-sm text-gray-900">
+                                    {/* <div className="px-4 py-3">
+                                    <span className="block text-sm text-gray-900">
                                         {session.user.name}
                                         </span>
-                                        <span class="block text-sm font-medium text-gray-500 truncate">
+                                        <span className="block text-sm font-medium text-gray-500 truncate">
                                         {session.user.email}
                                     </span>
                                 </div> */}
-                                    <ul class="py-1">
-                                        <li class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <ul className="py-1">
+                                        <li className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                             <button
                                                 className=""
                                                 onClick={signoutHandler}

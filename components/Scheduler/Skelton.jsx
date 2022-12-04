@@ -44,18 +44,18 @@ function Skelton() {
                                     <div className="w-2 h-6 bg-gray-200 rounded"></div>
                                 </div>
                             </FlexWrapper>
-                            <Full className="mt-3">
-                                <div className="flex justify-center font-light text-center gap-4">
+                            <Full className="mt-6">
+                                <div className="flex justify-center font-light text-center gap-8">
                                     <div className="w-12">
-                                        <div className="w-12 h-8 bg-gray-200 rounded mb-2"></div>
+                                        <div className="w-12 h-9 bg-gray-200 rounded mb-2"></div>
                                         <div className="w-12 h-4 bg-gray-200 rounded"></div>
                                     </div>
                                     <div className="w-12">
-                                        <div className="w-12 h-8 bg-gray-200 rounded mb-2"></div>
+                                        <div className="w-12 h-9 bg-gray-200 rounded mb-2"></div>
                                         <div className="w-12 h-4 bg-gray-200 rounded"></div>
                                     </div>
                                     <div className="w-12">
-                                        <div className="w-12 h-8 bg-gray-200 rounded mb-2"></div>
+                                        <div className="w-12 h-9 bg-gray-200 rounded mb-2"></div>
                                         <div className="w-12 h-4 bg-gray-200 rounded"></div>
                                     </div>
                                 </div>
