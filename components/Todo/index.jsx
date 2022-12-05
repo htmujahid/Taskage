@@ -1,9 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
-import useSWR, { useSWRConfig } from "swr";
+import React, { useEffect, createContext, useState } from "react";
+import useSWR from "swr";
 
 import Card from "./Card";
 import Form from "./Form";
 import Skelton from "./Skelton";
+
+// creating context for todo
+export const TodoContext = createContext();
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -47,7 +50,7 @@ function index() {
     if (error) return <div>failed to load</div>;
     if (!data) return <Skelton />;
     return (
-        <React.Fragment>
+        <TodoContext.Provider value={setTodos}>
             <div className="my-10">
                 <Form />
             </div>
@@ -96,7 +99,7 @@ function index() {
                     </div>
                 </div>
             )}
-        </React.Fragment>
+        </TodoContext.Provider>
     );
 }
 

@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import { TodoContext } from "./index";
+
 import { useSWRConfig } from "swr";
 
 function Controls({ _id, setEditMode, setControls, setIsCardLoading }) {
     const { mutate } = useSWRConfig();
+    const setTodos = useContext(TodoContext);
 
     async function handleDelete() {
         setIsCardLoading(true);
+        setTodos((prev) => {
+            return prev.filter((t) => t._id !== _id);
+        });
+        setIsCardLoading(false);
         await fetch(`/api/todos/${_id}`, {
             method: "DELETE",
         })
@@ -13,7 +20,6 @@ function Controls({ _id, setEditMode, setControls, setIsCardLoading }) {
             .then((data) => {})
             .catch((err) => console.log(err))
             .finally(() => {
-                setIsCardLoading(false);
                 mutate("/api/todos");
             });
     }

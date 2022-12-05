@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-
+import React, { useContext, useState } from "react";
+import { TodoContext } from "./index";
 import { useSWRConfig } from "swr";
 
 import Wrapper from "../Common/Wrapper";
@@ -29,6 +29,7 @@ const priorityOptions = [
 
 function FormComponent() {
     const { mutate } = useSWRConfig();
+    const setTodos = useContext(TodoContext);
     // inputs
     const [title, setTitle] = useState("");
     const [date, setDate] = useState("");
@@ -52,8 +53,16 @@ function FormComponent() {
             date,
             priority,
             category,
+            completed_at: null,
         };
         setIsLoading(true);
+        setTodos((prev) => [data, ...prev]);
+        setIsLoading(false);
+        setTitle("");
+        setDate("");
+        setDescription("");
+        setPriority("");
+        setCategory("");
         fetch("/api/todos", {
             method: "POST",
             headers: {
@@ -62,16 +71,9 @@ function FormComponent() {
             body: JSON.stringify(data),
         })
             .then((res) => res.json())
-            .then((data) => {
-                setTitle("");
-                setDate("");
-                setDescription("");
-                setPriority("");
-                setCategory("");
-            })
+            .then((data) => {})
             .catch((err) => console.log(err))
             .finally(() => {
-                setIsLoading(false);
                 mutate("/api/todos");
             });
     }

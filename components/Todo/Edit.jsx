@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
+import { TodoContext } from "./index";
 
 import { useSWRConfig } from "swr";
 import Wrapper from "../Common/Wrapper";
@@ -27,6 +28,7 @@ const priorityOptions = [
 
 function Edit({ todo, setEditMode }) {
     const { mutate } = useSWRConfig();
+    const setTodos = useContext(TodoContext);
 
     const [additional, setAdditional] = useState(false);
 
@@ -50,8 +52,16 @@ function Edit({ todo, setEditMode }) {
             date,
             priority,
             category,
+            completed_at: todo.completed_at,
         };
         setIsLoading(true);
+        setTodos((prev) => {
+            const index = prev.findIndex((t) => t.id === todo.id);
+            prev[index] = data;
+            return [...prev];
+        });
+        setEditMode(false);
+        setIsLoading(false);
         await fetch(`/api/todos/${todo._id}`, {
             method: "PUT",
             headers: {
@@ -66,12 +76,7 @@ function Edit({ todo, setEditMode }) {
             })
             .finally(() => {
                 mutate("/api/todos");
-                setEditMode(false);
             });
-
-        setIsLoading(false);
-        setEditMode(false);
-        mutate("/api/todos");
     }
     return (
         <Wrapper>

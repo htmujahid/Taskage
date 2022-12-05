@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+
 import { useSWRConfig } from "swr";
 import Wrapper from "../Common/Wrapper";
 import FlexWrapper from "../Layouts/FlexWrapper";
@@ -24,6 +25,8 @@ function Card({ todo }) {
 
     async function handleCompletion() {
         setIsCardLoading(true);
+        setIsCompleted((prev) => !prev);
+        setIsCardLoading(false);
         await fetch(`/api/todos/${todo._id}`, {
             method: "PATCH",
             headers: {
@@ -32,10 +35,15 @@ function Card({ todo }) {
             body: JSON.stringify({
                 completed_at: isCompleted ? null : new Date().toISOString(),
             }),
-        });
-        setIsCardLoading(false);
-        mutate("/api/todos");
-        setIsCompleted((prev) => !prev);
+        })
+            .then((res) => res.json())
+            .then((data) => {})
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                mutate("/api/todos");
+            });
     }
 
     function handleControls() {
