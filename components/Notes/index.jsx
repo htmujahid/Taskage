@@ -26,7 +26,7 @@ function index() {
             <div className="container mx-auto my-10 flex flex-wrap justify-center sm:justify-start gap-6 max-w-[1300px] ">
                 {notes &&
                     notes.map((note) => <Card key={note._id} note={note} />)}
-                <Form />
+                <Form setNotes={setNotes} />
             </div>
         </React.Fragment>
     );

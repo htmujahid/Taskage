@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSWRConfig } from "swr";
-function Form() {
+function Form({ setNotes }) {
     const [editMode, setEditMode] = useState(false);
     const noteInput = useRef();
     const card = useRef();
@@ -34,21 +34,38 @@ function Form() {
             handleDiscard();
             return;
         }
+
+        const data = {
+            note: noteInput.current.value,
+            color: card.current.style.backgroundColor,
+            rotate: card.current.style.rotate,
+        };
+
+        setNotes((prevNotes) => {
+            return [...prevNotes, data];
+        });
+
+        noteInput.current.value = "";
+        handleDiscard();
+
         await fetch("/api/notes", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                note: noteInput.current.value,
-                color: card.current.style.backgroundColor,
-                rotate: card.current.style.rotate,
-            }),
-        });
-        card.current.style.backgroundColor = "";
-        card.current.style.rotate = "";
-        setEditMode(false);
-        mutate("/api/notes");
+            body: JSON.stringify(data),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                card.current.style.backgroundColor = "";
+                card.current.style.rotate = "";
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                mutate("/api/notes");
+            });
     }
 
     function generateRandomRotation() {

@@ -18,19 +18,30 @@ function Edit({ note, editMode, setEditMode }) {
             return;
         }
 
+        const data = {
+            note: noteInput.current.value,
+            color: note.color,
+            rotate: note.rotate,
+        };
+
+        noteInput.current.value = "";
+        handleDiscard();
+
         await fetch(`/api/notes/${note._id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                note: noteInput.current.value,
-                color: card.current.style.backgroundColor,
-                rotate: card.current.style.rotate,
-            }),
-        });
-        setEditMode(false);
-        mutate("/api/notes");
+            body: JSON.stringify(data),
+        })
+            .then((res) => res.json())
+            .then((data) => {})
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                mutate("/api/notes");
+            });
     }
 
     function handleDiscard() {
