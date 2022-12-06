@@ -1,12 +1,11 @@
 import React, { useEffect, createContext, useState } from "react";
+export const TodoContext = createContext();
+
 import useSWR from "swr";
 
 import Card from "./Card";
 import Form from "./Form";
 import Skelton from "./Skelton";
-
-// creating context for todo
-export const TodoContext = createContext();
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -16,6 +15,11 @@ function index() {
     const [todos, setTodos] = useState(data);
     const [completedTodos, setCompletedTodos] = useState([]);
     const [activeTodos, setActiveTodos] = useState([]);
+
+    const contextData = {
+        todos,
+        setTodos,
+    };
 
     useEffect(() => {
         if (!data) {
@@ -50,7 +54,7 @@ function index() {
     if (error) return <div>failed to load</div>;
     if (!data) return <Skelton />;
     return (
-        <TodoContext.Provider value={setTodos}>
+        <TodoContext.Provider value={contextData}>
             <div className="my-10">
                 <Form />
             </div>

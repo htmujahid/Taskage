@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { HabitContext } from "./index";
+
 import { useSWRConfig } from "swr";
 import Submit from "../Form/Submit";
 import Input from "../Form/Input";
@@ -14,6 +16,8 @@ const routineOptions = [
     { value: "monthly", text: "Monthly" },
 ];
 function FormComponent() {
+    const { setHabits } = useContext(HabitContext) ?? {};
+
     const { mutate } = useSWRConfig();
     const [title, setTitle] = useState("");
     const [routine, setRoutine] = useState("");
@@ -24,25 +28,27 @@ function FormComponent() {
         if (!title.trim() || !routine.trim()) {
             return;
         }
+        const data = {
+            title,
+            routine,
+        };
         setIsLoading(true);
+        setHabits((prev) => [...prev, data]);
+        setTitle("");
+        setRoutine("");
+        setIsLoading(false);
+
         fetch("/api/habits", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                title,
-                routine,
-            }),
+            body: JSON.stringify(data),
         })
             .then((res) => res.json())
-            .then((data) => {
-                setTitle("");
-                setRoutine("");
-            })
+            .then((data) => {})
             .catch((err) => console.log(err))
             .finally(() => {
-                setIsLoading(false);
                 mutate("/api/habits");
             });
     }

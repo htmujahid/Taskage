@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
+import { NoteContext } from "./index";
 import { useSWRConfig } from "swr";
 
 function Controls({ _id, setEditMode, setControls }) {
+    const { setNotes } = useContext(NoteContext) ?? {};
+
     const { mutate } = useSWRConfig();
 
     async function handleDelete() {
+        setNotes((prev) => {
+            return prev.filter((note) => note._id !== _id);
+        });
+
         await fetch(`/api/todos/${_id}`, {
             method: "DELETE",
         })

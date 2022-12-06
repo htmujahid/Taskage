@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { GoalContext } from "./index";
+
 import { useSWRConfig } from "swr";
 import Submit from "../Form/Submit";
 import Date from "../Form/Date";
@@ -9,6 +11,8 @@ import Wrapper from "../Common/Wrapper";
 import Full from "../Common/Full";
 
 function FormComponent() {
+    const { setGoals } = useContext(GoalContext) ?? {};
+
     const { mutate } = useSWRConfig();
 
     const [startDate, setStartDate] = useState("");
@@ -22,27 +26,31 @@ function FormComponent() {
         if (!title.trim() || !startDate.trim() || !endDate.trim()) {
             return;
         }
+
+        const data = {
+            title,
+            start_date: startDate,
+            end_date: endDate,
+        };
+
         setIsLoading(true);
+        setGoals((prev) => [...prev, data]);
+        setTitle("");
+        setStartDate("");
+        setEndDate("");
+        setIsLoading(false);
+
         fetch("/api/goals", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                title,
-                start_date: startDate,
-                end_date: endDate,
-            }),
+            body: JSON.stringify(data),
         })
             .then((res) => res.json())
-            .then((data) => {
-                setTitle("");
-                setStartDate("");
-                setEndDate("");
-            })
+            .then((data) => {})
             .catch((err) => console.log(err))
             .finally(() => {
-                setIsLoading(false);
                 mutate("/api/goals");
             });
     }

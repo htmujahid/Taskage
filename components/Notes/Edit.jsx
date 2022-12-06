@@ -1,7 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { NoteContext } from "./index";
+
 import { useSWRConfig } from "swr";
-// import Edit from './Edit';
 function Edit({ note, editMode, setEditMode }) {
+    const { setNotes } = useContext(NoteContext) ?? {};
+
     const noteInput = useRef();
     const { mutate } = useSWRConfig();
     const card = useRef();
@@ -23,6 +26,16 @@ function Edit({ note, editMode, setEditMode }) {
             color: note.color,
             rotate: note.rotate,
         };
+
+        setNotes((prev) => {
+            const newNotes = prev.map((n) => {
+                if (n._id === note._id) {
+                    return { ...n, ...data };
+                }
+                return n;
+            });
+            return newNotes;
+        });
 
         noteInput.current.value = "";
         handleDiscard();

@@ -1,4 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
+import { SchedulerContext } from "./index";
+
 import { useSWRConfig } from "swr";
 import Submit from "../Form/Submit";
 import Time from "../Form/Time";
@@ -9,6 +11,8 @@ import Wrapper from "../Common/Wrapper";
 import Image from "next/image";
 
 function FormComponent() {
+    const { setTasks } = useContext(SchedulerContext) ?? {};
+
     const [showTime, setShowTime] = useState(false);
     const { mutate } = useSWRConfig();
 
@@ -29,8 +33,23 @@ function FormComponent() {
         const data = {
             title,
             time,
+            intervals: [
+                {
+                    started_at: new Date().toISOString(),
+                    completed_at: null,
+                },
+            ],
+            completed_at: null,
         };
         setIsLoading(true);
+        setTasks((prev) => [data, ...prev]);
+        setTitle("");
+        setTime({
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
+        });
+        setIsLoading(false);
         fetch("/api/scheduler", {
             method: "POST",
             headers: {
@@ -39,15 +58,7 @@ function FormComponent() {
             body: JSON.stringify(data),
         })
             .then((res) => res.json())
-            .then((data) => {
-                setTitle("");
-                setTime({
-                    hours: 0,
-                    minutes: 0,
-                    seconds: 0,
-                });
-                setIsLoading(false);
-            })
+            .then((data) => {})
             .catch((err) => console.log(err))
             .finally(() => {
                 setShowTime(false);

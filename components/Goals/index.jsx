@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
+export const GoalContext = createContext();
+
 import Card from "./Card";
 import Form from "./Form";
 import useSWR from "swr";
@@ -8,6 +10,11 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 function index() {
     const { data, error } = useSWR("/api/goals", fetcher);
     const [goals, setGoals] = useState(data);
+
+    const contextData = {
+        goals,
+        setGoals,
+    };
 
     useEffect(() => {
         if (!data) {
@@ -22,7 +29,7 @@ function index() {
     if (!data) return <Skelton />;
 
     return (
-        <React.Fragment>
+        <GoalContext.Provider value={contextData}>
             <div className="my-10">
                 <Form />
             </div>
@@ -37,7 +44,7 @@ function index() {
                         ))}
                 </div>
             </div>
-        </React.Fragment>
+        </GoalContext.Provider>
     );
 }
 

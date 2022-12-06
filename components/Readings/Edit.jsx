@@ -1,6 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { ReadingContext } from "./index";
+
 import { useSWRConfig } from "swr";
 function Edit({ reading, card, setEditMode }) {
+    const { setReadings } = useContext(ReadingContext) ?? {};
     const { mutate } = useSWRConfig();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -30,27 +33,37 @@ function Edit({ reading, card, setEditMode }) {
         if (!title.trim() || !author.trim() || !status.trim()) {
             return;
         }
+        const data = {
+            title,
+            author,
+            status,
+            start_date,
+            end_date,
+        };
         setIsLoading(true);
+        setReadings((prev) => {
+            const newReadings = prev.map((reading) => {
+                if (reading._id === reading._id) {
+                    return { ...reading, ...data };
+                }
+                return reading;
+            });
+            return newReadings;
+        });
+        setIsLoading(false);
+        setEditMode(false);
         await fetch(`/api/readings/${reading._id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                title,
-                author,
-                start_date,
-                end_date,
-                status,
-            }),
+            body: JSON.stringify(data),
         })
             .then((res) => res.json())
             .then((data) => {})
             .catch((err) => console.log(err))
             .finally(() => {
-                setIsLoading(false);
                 mutate("/api/readings");
-                setEditMode(false);
             });
     }
 

@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect, createContext } from "react";
+export const ReadingContext = createContext();
+
 import Card from "./Card";
 import Form from "./Form";
 
@@ -9,9 +11,14 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 function index() {
     const { data, error } = useSWR("/api/readings", fetcher);
 
-    const [readings, setReadings] = React.useState(data);
+    const [readings, setReadings] = useState(data);
 
-    React.useEffect(() => {
+    let contextData = {
+        readings,
+        setReadings,
+    };
+
+    useEffect(() => {
         if (data !== undefined && data.error !== "Not authenticated") {
             setReadings(data);
         } else {
@@ -23,7 +30,7 @@ function index() {
     if (!data) return <Skelton />;
 
     return (
-        <React.Fragment>
+        <ReadingContext.Provider value={contextData}>
             <div className="my-10">
                 <Form />
             </div>
@@ -37,7 +44,7 @@ function index() {
                         <Card key={reading.id} reading={reading} />
                     ))}
             </div>
-        </React.Fragment>
+        </ReadingContext.Provider>
     );
 }
 

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
+export const HabitContext = createContext();
 import Card from "./Card";
 import Form from "./Form";
 import useSWR from "swr";
@@ -11,6 +12,11 @@ function index() {
 
     const [accomplished, setAccomplished] = useState([]);
     const [unaccomplished, setUnaccomplished] = useState([]);
+
+    const contextData = {
+        habits,
+        setHabits,
+    };
 
     useEffect(() => {
         if (!data) {
@@ -84,7 +90,7 @@ function index() {
     if (!data) return <Skelton />;
 
     return (
-        <React.Fragment>
+        <HabitContext.Provider value={contextData}>
             <div className="my-10">
                 <Form />
             </div>
@@ -123,7 +129,7 @@ function index() {
                     </div>
                 </div>
             )}
-        </React.Fragment>
+        </HabitContext.Provider>
     );
 }
 

@@ -1,6 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { NoteContext } from "./index";
+
 import { useSWRConfig } from "swr";
-function Form({ setNotes }) {
+function Form() {
+    const { setNotes } = useContext(NoteContext) ?? {};
+
     const [editMode, setEditMode] = useState(false);
     const noteInput = useRef();
     const card = useRef();

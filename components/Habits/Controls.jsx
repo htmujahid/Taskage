@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import { HabitContext } from "./index";
+
 import { useSWRConfig } from "swr";
 
 function Controls({
@@ -9,10 +11,14 @@ function Controls({
     habit,
     setIsCardLoading,
 }) {
+    const { setHabits } = useContext(HabitContext) ?? {};
+
     const { mutate } = useSWRConfig();
 
     async function handleDelete() {
         setIsCardLoading(true);
+        setHabits((prev) => prev.filter((r) => r._id != _id));
+        setIsCardLoading(false);
         await fetch(`/api/habits/${_id}`, {
             method: "DELETE",
         })
@@ -20,7 +26,6 @@ function Controls({
             .then((data) => {})
             .catch((err) => console.log(err))
             .finally(() => {
-                setIsCardLoading(false);
                 mutate("/api/habits");
             });
     }

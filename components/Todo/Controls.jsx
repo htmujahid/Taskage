@@ -5,7 +5,7 @@ import { useSWRConfig } from "swr";
 
 function Controls({ _id, setEditMode, setControls, setIsCardLoading }) {
     const { mutate } = useSWRConfig();
-    const setTodos = useContext(TodoContext);
+    const { setTodos } = useContext(TodoContext) ?? {};
 
     async function handleDelete() {
         setIsCardLoading(true);

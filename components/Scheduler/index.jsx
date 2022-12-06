@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
+export const SchedulerContext = createContext();
+
 import Form from "./Form";
 import Card from "./Card";
 
@@ -14,6 +16,11 @@ function index() {
 
     const [completedTasks, setCompletedTasks] = useState([]);
     const [activeTasks, setActiveTasks] = useState([]);
+
+    const contextData = {
+        tasks,
+        setTasks,
+    };
 
     let completed;
 
@@ -71,7 +78,7 @@ function index() {
     }
 
     return (
-        <div>
+        <SchedulerContext.Provider value={contextData}>
             <div className="my-10">
                 <Form />
             </div>
@@ -117,7 +124,7 @@ function index() {
                     ))}
                 </div>
             </div>
-        </div>
+        </SchedulerContext.Provider>
     );
 }
 

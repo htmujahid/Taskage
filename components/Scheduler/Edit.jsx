@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { SchedulerContext } from "./index";
+
 import { useSWRConfig } from "swr";
 import Wrapper from "../Common/Wrapper";
 import Form from "../Form/Form";
@@ -9,6 +11,8 @@ import Image from "next/image";
 import Discard from "../Form/Discard";
 import Submit from "../Form/Submit";
 function Edit({ task, setEditMode, setIsTime }) {
+    const { setTasks } = useContext(SchedulerContext) ?? {};
+
     const [showTime, setShowTime] = useState(false);
     const { mutate } = useSWRConfig();
     const [title, setTitle] = useState(task.title);
@@ -24,8 +28,27 @@ function Edit({ task, setEditMode, setIsTime }) {
         const data = {
             title,
             time,
+            intervals: task.intervals,
+            completed_at: task.completed_at,
         };
         setIsLoading(true);
+        setTasks((prev) =>
+            prev.map((task) => {
+                if (task._id === task._id) {
+                    return data;
+                }
+                return task;
+            })
+        );
+        if (time.hours != 0 || time.minutes != 0 || time.seconds != 0) {
+            setIsTime(true);
+        } else {
+            setIsTime(false);
+        }
+        setEditMode(false);
+        setShowTime(false);
+        setIsLoading(false);
+
         fetch(`/api/scheduler/${task._id}`, {
             method: "PUT",
             headers: {
@@ -37,14 +60,6 @@ function Edit({ task, setEditMode, setIsTime }) {
             .then((data) => {})
             .catch((err) => console.log(err))
             .finally(() => {
-                if (time.hours != 0 || time.minutes != 0 || time.seconds != 0) {
-                    setIsTime(true);
-                } else {
-                    setIsTime(false);
-                }
-                setShowTime(false);
-                setIsLoading(false);
-                setEditMode(false);
                 mutate("/api/scheduler");
             });
     }

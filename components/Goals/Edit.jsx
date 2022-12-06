@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { GoalContext } from "./index";
+
 import { useSWRConfig } from "swr";
 import Wrapper from "../Common/Wrapper";
 import Form from "../Form/Form";
@@ -10,6 +12,7 @@ import Full from "../Common/Full";
 import Discard from "../Form/Discard";
 
 function Edit({ goal, setEditMode }) {
+    const { setGoals } = useContext(GoalContext) ?? {};
     const { mutate } = useSWRConfig();
     const [startDate, setStartDate] = useState(goal.start_date);
     const [endDate, setEndDate] = useState(goal.end_date);
@@ -26,24 +29,37 @@ function Edit({ goal, setEditMode }) {
         ) {
             return;
         }
+
+        const data = {
+            title,
+            start_date: startDate,
+            end_date: endDate,
+        };
+
         setIsLoading(true);
+        setGoals((prev) => {
+            const newGoals = prev.map((goal) => {
+                if (goal.id === goal.id) {
+                    return data;
+                }
+                return goal;
+            });
+            return newGoals;
+        });
+        setIsLoading(false);
+        setEditMode(false);
+
         await fetch(`/api/goals/${goal._id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                title,
-                start_date: startDate,
-                end_date: endDate,
-            }),
+            body: JSON.stringify(data),
         })
             .then((res) => res.json())
             .then((data) => {})
             .catch((err) => console.log(err))
             .finally(() => {
-                setIsLoading(false);
-                setEditMode(false);
                 mutate("/api/goals");
             });
     }

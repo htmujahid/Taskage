@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { HabitContext } from "./index";
+
 import { useSWRConfig } from "swr";
 import Full from "../Common/Full";
 import Discard from "../Form/Discard";
@@ -16,6 +18,8 @@ const routineOptions = [
     { value: "monthly", text: "Monthly" },
 ];
 function Edit({ habit, setEditMode }) {
+    const { setHabits } = useContext(HabitContext) ?? {};
+
     const { mutate } = useSWRConfig();
     const [title, setTitle] = useState(habit.title);
     const [routine, setRoutine] = useState(habit.routine);
@@ -27,23 +31,34 @@ function Edit({ habit, setEditMode }) {
         if (!title.trim() || !routine.trim()) {
             return;
         }
+        const data = {
+            title,
+            routine,
+        };
+
         setIsLoading(true);
+        setHabits((prev) => {
+            const updated = prev.map((habit) => {
+                if (habit.id === data.id) {
+                    return data;
+                }
+                return habit;
+            });
+            return updated;
+        });
+        setIsLoading(false);
+        setEditMode(false);
         await fetch(`/api/habits/${habit._id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                title,
-                routine,
-            }),
+            body: JSON.stringify(data),
         })
             .then((res) => res.json())
             .then((data) => {})
             .catch((err) => console.log(err))
             .finally(() => {
-                setIsLoading(false);
-                setEditMode(false);
                 mutate("/api/habits");
             });
     }

@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
+import { GoalContext } from "./index";
+
 import { useSWRConfig } from "swr";
 
 function Controls({ _id, setEditMode, setControls, setIsCardLoading }) {
+    const { setGoals } = useContext(GoalContext) ?? {};
+
     const { mutate } = useSWRConfig();
 
     async function handleDelete() {
         setIsCardLoading(true);
+        setGoals((prev) => prev.filter((r) => r._id != _id));
+        setIsCardLoading(false);
         await fetch(`/api/goals/${_id}`, {
             method: "DELETE",
         })
@@ -13,7 +19,6 @@ function Controls({ _id, setEditMode, setControls, setIsCardLoading }) {
             .then((data) => {})
             .catch((err) => console.log(err))
             .finally(() => {
-                setIsCardLoading(false);
                 mutate("/api/goals");
             });
     }

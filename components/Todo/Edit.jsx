@@ -28,7 +28,7 @@ const priorityOptions = [
 
 function Edit({ todo, setEditMode }) {
     const { mutate } = useSWRConfig();
-    const setTodos = useContext(TodoContext);
+    const { setTodos } = useContext(TodoContext) ?? {};
 
     const [additional, setAdditional] = useState(false);
 

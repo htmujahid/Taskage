@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { ReadingContext } from "./index";
 
 import { useSWRConfig } from "swr";
 import Submit from "../Form/Submit";
@@ -18,6 +19,8 @@ const statusOptions = [
     { value: "To Read", text: "To Read" },
 ];
 function FormComponent() {
+    const { setReadings } = useContext(ReadingContext) ?? {};
+
     const { mutate } = useSWRConfig();
     const [title, setTitle] = useState("");
     const [status, setStatus] = useState("");
@@ -46,34 +49,36 @@ function FormComponent() {
         if (!title.trim() || !author.trim() || !status.trim()) {
             return;
         }
+        const data = {
+            title,
+            author,
+            status,
+            start_date: startDate,
+            end_date: endDate,
+            type,
+            color: generateRandomColor(),
+        };
+
         setIsLoading(true);
+        setReadings((prev) => [...prev, data]);
+        setTitle("");
+        setAuthor("");
+        setType("");
+        setStartDate("");
+        setEndDate("");
+        setStatus("");
+        setIsLoading(false);
         await fetch("/api/readings", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                title,
-                author,
-                type,
-                start_date: startDate,
-                end_date: endDate,
-                status,
-                color: generateRandomColor(),
-            }),
+            body: JSON.stringify(data),
         })
             .then((res) => res.json())
-            .then((data) => {
-                setTitle("");
-                setAuthor("");
-                setType("");
-                setStartDate("");
-                setEndDate("");
-                setStatus("");
-            })
+            .then((data) => {})
             .catch((err) => console.log(err))
             .finally(() => {
-                setIsLoading(false);
                 mutate("/api/readings");
             });
     }

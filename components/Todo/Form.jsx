@@ -29,7 +29,7 @@ const priorityOptions = [
 
 function FormComponent() {
     const { mutate } = useSWRConfig();
-    const setTodos = useContext(TodoContext);
+    const setTodos = useContext(TodoContext) ?? {};
     // inputs
     const [title, setTitle] = useState("");
     const [date, setDate] = useState("");

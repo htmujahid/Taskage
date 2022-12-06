@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ReadingContext } from "./index";
+
 import { useSWRConfig } from "swr";
 
 function Controls({ _id, setEditMode, setIsCardLoading }) {
+    const { setReadings } = useContext(ReadingContext) ?? {};
+
     const { mutate } = useSWRConfig();
 
     async function handleDelete() {
         setIsCardLoading(true);
+        setReadings((prev) => prev.filter((r) => r._id != _id));
+        setIsCardLoading(false);
+
         await fetch(`/api/readings/${_id}`, {
             method: "DELETE",
         })
@@ -13,7 +20,6 @@ function Controls({ _id, setEditMode, setIsCardLoading }) {
             .then((data) => {})
             .catch((err) => console.log(err))
             .finally(() => {
-                setIsCardLoading(false);
                 mutate("/api/readings");
             });
     }
