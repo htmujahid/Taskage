@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
-import Navbar from "@/components/Navbar/Navbar";
-import Reading from "@/components/Readings/index";
+import Goal from "@/components/Goals/index";
 import { getSession } from "next-auth/react";
+import AppbarWrapper from "@/components/Appbar/AppbarWrapper";
 
-export default function readings() {
+export default function goals() {
     return (
         <React.Fragment>
             <Head>
-                <title>Taskage - Readings</title>
+                <title>Taskage - Goals</title>
             </Head>
-            <Navbar />
-            <Reading />
+            <AppbarWrapper>
+                <Goal />
+            </AppbarWrapper>
         </React.Fragment>
     );
 }

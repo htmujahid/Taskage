@@ -1,17 +1,22 @@
 import React, { useEffect } from "react";
-import Head from "next/head";
-import Navbar from "@/components/Navbar/Navbar";
-import Goal from "@/components/Goals/index";
 import { getSession } from "next-auth/react";
 
-export default function goals() {
+import Head from "next/head";
+import AppbarWrapper from "@/components/Appbar/AppbarWrapper";
+import ComingSoon from "@/components/Common/ComingSoon";
+
+export default function list() {
     return (
         <React.Fragment>
             <Head>
-                <title>Taskage - Goals</title>
+                <title>Taskage - Home</title>
             </Head>
-            <Navbar />
-            <Goal />
+            {/* <Alert /> */}
+            <AppbarWrapper>
+                <React.Fragment>
+                    <ComingSoon />
+                </React.Fragment>
+            </AppbarWrapper>
         </React.Fragment>
     );
 }

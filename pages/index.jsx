@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
-import Navbar from "@/components/Navbar/Navbar";
-import Alert from "@/components/Common/Alert";
-import Summary from "@/components/Summary/index";
-import { getSession } from "next-auth/react";
+import Header from "@/components/Header/Header";
+import HeroSection from "@/components/HeroSection/HeroSection";
+import Feature from "@/components/Feature/Feature";
+import Footer from "@/components/Footer/Footer";
+import Testimonials from "@/components/Testimonials/Testimonials";
 
 export default function Home() {
     return (
@@ -11,25 +12,11 @@ export default function Home() {
             <Head>
                 <title>Taskage - Home</title>
             </Head>
-            <Alert />
-            <Navbar />
-            <Summary />
+            <Header />
+            <HeroSection />
+            <Feature />
+            <Testimonials />
+            <Footer />
         </React.Fragment>
     );
-}
-
-export async function getServerSideProps(context) {
-    const session = await getSession(context);
-    if (!session) {
-        return {
-            redirect: {
-                destination: "/auth/signin",
-                permanent: false,
-            },
-            props: {},
-        };
-    }
-    return {
-        props: {},
-    };
 }

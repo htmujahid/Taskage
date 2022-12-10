@@ -1,17 +1,22 @@
 import React, { useEffect } from "react";
-import Head from "next/head";
-import Navbar from "@/components/Navbar/Navbar";
-import Todo from "@/components/Todos/index";
 import { getSession } from "next-auth/react";
 
-export default function todo() {
+import Head from "next/head";
+import AppbarWrapper from "@/components/Appbar/AppbarWrapper";
+import ComingSoon from "@/components/Common/ComingSoon";
+
+export default function backlog() {
     return (
         <React.Fragment>
             <Head>
-                <title>Taskage - Todo</title>
+                <title>Taskage - Home</title>
             </Head>
-            <Navbar />
-            <Todo />
+            {/* <Alert /> */}
+            <AppbarWrapper>
+                <React.Fragment>
+                    <ComingSoon />
+                </React.Fragment>
+            </AppbarWrapper>
         </React.Fragment>
     );
 }

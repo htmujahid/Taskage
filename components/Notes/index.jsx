@@ -28,7 +28,7 @@ function index() {
     if (!data) return <PageLoading />;
     return (
         <NoteContext.Provider value={contextData}>
-            <div className="container mx-auto my-10 flex flex-wrap justify-center sm:justify-start gap-6 max-w-[1300px] ">
+            <div className="my-10 flex flex-wrap justify-center sm:justify-start gap-6 mx-10">
                 {notes &&
                     notes.map((note) => <Card key={note._id} note={note} />)}
                 <Form />

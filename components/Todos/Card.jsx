@@ -11,7 +11,6 @@ import Image from "next/image";
 import Text from "@/components/Typography/Text";
 import Button from "@/components/Widgets/Button";
 import Paragraph from "@/components/Typography/Paragraph";
-import Full from "@/components/Common/Full";
 import CardLoading from "@/components/Common/CardLoading";
 import { updateTodoStatus } from "@/lib/app/todos";
 
@@ -100,22 +99,20 @@ function Card({ todo }) {
                             </FlexWrapper>
                         </React.Fragment>
                     )}
-                    <Full
+                    <Absolute
                         className={
                             "absolute mt-3 bg-white left-1/2 -translate-x-1/2 border-2 border-black rounded-full w-6"
                         }
                     >
-                        <Image
+                        <img
                             src={`/assets/icons/${
                                 detailed ? "minus" : "plus"
                             }.svg`}
                             alt=""
-                            width={32}
-                            height={32}
                             className="mx-auto"
                             onClick={() => setDetailed((prev) => !prev)}
                         />
-                    </Full>
+                    </Absolute>
                 </Wrapper>
             ) : (
                 <Edit todo={todo} setEditMode={setEditMode} />

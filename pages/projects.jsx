@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
-import Navbar from "@/components/Navbar/Navbar";
-import Habit from "@/components/Habits/index";
+import Projects from "@/components/Header/Header";
+import Note from "@/components/Projects/index";
 import { getSession } from "next-auth/react";
 
-export default function habits() {
+export default function projects() {
     return (
         <React.Fragment>
             <Head>
-                <title>Taskage - Habits</title>
+                <title>Taskage - Notes</title>
             </Head>
-            <Navbar />
-            <Habit />
+            <Projects />
+            <Note />
         </React.Fragment>
     );
 }

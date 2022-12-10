@@ -7,7 +7,7 @@ function Alert({}) {
     }
 
     return (
-        <div className="flex p-4 mb-4 bg-red-100" ref={alert}>
+        <div className="flex p-4 bg-red-100" ref={alert}>
             <div className="text-sm font-medium text-red-700 dark:text-red-800 text-center w-full">
                 This project is currently in testing phase with limited
                 features, Bug report is Encouraged{" "}

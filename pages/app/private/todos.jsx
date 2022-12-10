@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
-import Navbar from "@/components/Navbar/Navbar";
-import Scheduler from "@/components/Scheduler/index";
+import Todo from "@/components/Todos/index";
 import { getSession } from "next-auth/react";
+import AppbarWrapper from "@/components/Appbar/AppbarWrapper";
 
-export default function scheduler() {
+export default function todo() {
     return (
         <React.Fragment>
             <Head>
-                <title>Taskage - Scheduler</title>
+                <title>Taskage - Todo</title>
             </Head>
-            <Navbar />
-            <Scheduler />
+            <AppbarWrapper>
+                <Todo />
+            </AppbarWrapper>
         </React.Fragment>
     );
 }
