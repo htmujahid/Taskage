@@ -6,15 +6,16 @@ import TimeSpent from "./TimeSpent";
 import { useSWRConfig } from "swr";
 import Edit from "./Edit";
 import Progress from "./Progress";
-import Wrapper from "../Common/Wrapper";
-import Absolute from "../Common/Absolute";
-import Full from "../Common/Full";
-import FlexWrapper from "../Layouts/FlexWrapper";
-import Button from "../Widgets/Button";
-import Checkbox from "../Form/Checkbox";
-import Text from "../Typography/Text";
+import Wrapper from "@/components/Common/Wrapper";
+import Absolute from "@/components/Common/Absolute";
+import Full from "@/components/Common/Full";
+import FlexWrapper from "@/components/Layouts/FlexWrapper";
+import Button from "@/components/Widgets/Button";
+import Checkbox from "@/components/Form/Checkbox";
+import Text from "@/components/Typography/Text";
 import Image from "next/image";
-import CardLoading from "../Common/CardLoading";
+import CardLoading from "@/components/Common/CardLoading";
+import { updateSchedulerStatus } from "@/lib/app/scheduler";
 
 function Card({ task }) {
     const [isRunning, setIsRunning] = useState(
@@ -51,16 +52,11 @@ function Card({ task }) {
                 updatedInterval = task.intervals;
             }
         }
-        await fetch(`/api/scheduler/${task._id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                intervals: updatedInterval,
-                completed_at: !isCompleted ? new Date().toISOString() : null,
-            }),
-        });
+        const data = {
+            intervals: updatedInterval,
+            completed_at: !isCompleted ? new Date().toISOString() : null,
+        };
+        await updateSchedulerStatus(task._id, data);
         setIsCardLoading(false);
         setIsCompleted(!isCompleted);
         mutate("/api/scheduler");

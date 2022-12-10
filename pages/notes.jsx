@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
-import Navbar from "../components/Navbar/Navbar";
-import Note from "../components/Notes/index";
+import Navbar from "@/components/Navbar/Navbar";
+import Note from "@/components/Notes/index";
 import { getSession } from "next-auth/react";
 
 export default function notes() {

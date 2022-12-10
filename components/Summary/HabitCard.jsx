@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import Wrapper from "../Common/Wrapper";
-import FlexWrapper from "../Layouts/FlexWrapper";
-import Text from "../Typography/Text";
+import Wrapper from "@/components/Common/Wrapper";
+import FlexWrapper from "@/components/Layouts/FlexWrapper";
+import Text from "@/components/Typography/Text";
 function HabitCard({ count }) {
     return (
         <React.Fragment>

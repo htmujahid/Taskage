@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import Controls from "./Controls";
 import Edit from "./Edit";
 import { useSWRConfig } from "swr";
-import Wrapper from "../Common/Wrapper";
-import Checkbox from "../Form/Checkbox";
-import Absolute from "../Common/Absolute";
-import FlexWrapper from "../Layouts/FlexWrapper";
-import Text from "../Typography/Text";
-import Button from "../Widgets/Button";
+import Wrapper from "@/components/Common/Wrapper";
+import Checkbox from "@/components/Form/Checkbox";
+import Absolute from "@/components/Common/Absolute";
+import FlexWrapper from "@/components/Layouts/FlexWrapper";
+import Text from "@/components/Typography/Text";
+import Button from "@/components/Widgets/Button";
 import Image from "next/image";
-import CardLoading from "../Common/CardLoading";
+import CardLoading from "@/components/Common/CardLoading";
+import { updateHabitStatus } from "@/lib/app/habits";
 
 function Card({ habit, accomplished }) {
     const { mutate } = useSWRConfig();
@@ -21,19 +22,15 @@ function Card({ habit, accomplished }) {
 
     async function handleUpdation() {
         setIsCardLoading(true);
-        await fetch(`/api/habits/${habit._id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                updated_at: isUpdated ? null : new Date().toISOString(),
-                completed_at: habit.completed_at,
-            }),
-        });
+
+        const data = {
+            updated_at: isUpdated ? null : new Date().toISOString(),
+            completed_at: habit.completed_at,
+        };
+        await updateHabitStatus(habit._id, data);
         setIsCardLoading(false);
-        mutate("/api/habits");
         setIsUpdated(!isUpdated);
+        mutate("/api/habits");
     }
 
     function handleControls() {

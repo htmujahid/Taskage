@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { HabitContext } from "./index";
 
 import { useSWRConfig } from "swr";
+import { deleteHabit, updateHabitStatus } from "@/lib/app/habits";
 
 function Controls({
     _id,
@@ -17,17 +18,9 @@ function Controls({
 
     async function handleDelete() {
         setIsCardLoading(true);
-        setHabits((prev) => prev.filter((r) => r._id != _id));
+        await deleteHabit(_id);
         setIsCardLoading(false);
-        await fetch(`/api/habits/${_id}`, {
-            method: "DELETE",
-        })
-            .then((res) => res.json())
-            .then((data) => {})
-            .catch((err) => console.log(err))
-            .finally(() => {
-                mutate("/api/habits");
-            });
+        mutate("/api/habits");
     }
 
     function handleEdit() {
@@ -37,24 +30,14 @@ function Controls({
 
     async function handleDone() {
         setIsCardLoading(true);
-        await fetch(`/api/habits/${_id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                updated_at: habit.updated_at,
-                completed_at: isCompleted ? null : new Date().toISOString(),
-            }),
-        })
-            .then((res) => res.json())
-            .then((data) => {})
-            .catch((err) => console.log(err))
-            .finally(() => {
-                setIsCardLoading(false);
-                setControls(false);
-                mutate("/api/habits");
-            });
+        const data = {
+            updated_at: habit.updated_at,
+            completed_at: isCompleted ? null : new Date().toISOString(),
+        };
+        await updateHabitStatus(_id, data);
+        setIsCardLoading(false);
+        setControls(false);
+        mutate("/api/habits");
     }
 
     return (

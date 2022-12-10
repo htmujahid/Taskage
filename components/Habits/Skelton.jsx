@@ -1,8 +1,8 @@
 import React from "react";
 import Form from "./Form";
-import Wrapper from "../Common/Wrapper";
-import Absolute from "../Common/Absolute";
-import FlexWrapper from "../Layouts/FlexWrapper";
+import Wrapper from "@/components/Common/Wrapper";
+import Absolute from "@/components/Common/Absolute";
+import FlexWrapper from "@/components/Layouts/FlexWrapper";
 function Skelton() {
     return (
         <React.Fragment>

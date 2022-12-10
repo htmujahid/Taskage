@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { ReadingContext } from "./index";
 
 import { useSWRConfig } from "swr";
+import { updateReading } from "@/lib/app/readings";
 function Edit({ reading, card, setEditMode }) {
     const { setReadings } = useContext(ReadingContext) ?? {};
     const { mutate } = useSWRConfig();
@@ -41,30 +42,10 @@ function Edit({ reading, card, setEditMode }) {
             end_date,
         };
         setIsLoading(true);
-        setReadings((prev) => {
-            const newReadings = prev.map((reading) => {
-                if (reading._id === reading._id) {
-                    return { ...reading, ...data };
-                }
-                return reading;
-            });
-            return newReadings;
-        });
+        await updateReading(reading._id, data);
         setIsLoading(false);
         setEditMode(false);
-        await fetch(`/api/readings/${reading._id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-            .then((res) => res.json())
-            .then((data) => {})
-            .catch((err) => console.log(err))
-            .finally(() => {
-                mutate("/api/readings");
-            });
+        mutate("/api/readings");
     }
 
     return (

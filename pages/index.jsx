@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
-import Navbar from "../components/Navbar/Navbar";
-import Alert from "../components/Common/Alert";
-import Summary from "../components/Summary/index";
+import Navbar from "@/components/Navbar/Navbar";
+import Alert from "@/components/Common/Alert";
+import Summary from "@/components/Summary/index";
 import { getSession } from "next-auth/react";
 
 export default function Home() {

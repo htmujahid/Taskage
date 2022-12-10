@@ -1,6 +1,6 @@
-import { client } from "../../../lib/mongodb";
-import { requireApiAuth } from "../../../utils/requireAuth";
 import { getSession } from "next-auth/react";
+import { requireApiAuth } from "@/lib/api/auth";
+import { createScheduler, getScheduler } from "@/lib/api/db/scheduler";
 
 export default async function handler(req, res) {
     const access = requireApiAuth(req, res);
@@ -11,36 +11,10 @@ export default async function handler(req, res) {
     switch (req.method) {
         case "GET":
             try {
-                await client.connect();
-                const database = client.db("taskage");
-                const collection = database.collection("scheduler");
-                const todos = await collection
-                    .find({
-                        $and: [
-                            {
-                                created_by: session.user.email,
-                            },
-                            {
-                                $or: [
-                                    { completed_at: null },
-                                    {
-                                        created_at: {
-                                            $gte: new Date(
-                                                new Date().toDateString()
-                                            ).toISOString(),
-                                        },
-                                    },
-                                ],
-                            },
-                        ],
-                    })
-                    .sort({ created_at: -1 })
-                    .toArray();
+                const todos = await getScheduler(session);
                 res.status(200).json(todos);
             } catch (error) {
                 res.status(500).json({ message: "Something went wrong." });
-            } finally {
-                await client.close();
             }
             break;
         case "POST":
@@ -51,37 +25,15 @@ export default async function handler(req, res) {
                 return;
             }
 
-            const newScheduler = {
-                title: data.title,
-                time: data.time,
-                intervals: [
-                    {
-                        started_at: new Date().toISOString(),
-                        completed_at: null,
-                    },
-                ],
-                completed_at: null,
-                created_by: session.user.email,
-                created_at: new Date().toISOString(),
-            };
-
             try {
-                await client.connect();
-                const database = client.db("taskage");
-                const collection = database.collection("scheduler");
-                const result = await collection.insertOne(newScheduler);
-                console.log(
-                    `1 document was inserted with the _id: ${result.insertedId}`
-                );
+                const result = await createScheduler(data, session);
+                res.status(201).json(result);
             } catch (error) {
                 res.status(500).json({ message: "Something went wrong." });
-            } finally {
-                await client.close();
             }
-            res.status(201).json(newScheduler);
             break;
         default:
-            res.status(400).json({ message: "Something went wrong." });
-            break;
+            res.setHeader("Allow", ["GET", "POST"]);
+            res.status(405).end(`Method ${req.method} Not Allowed`);
     }
 }

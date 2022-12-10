@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
-import Navbar from "../components/Navbar/Navbar";
-import Todo from "../components/Todo/index";
+import Navbar from "@/components/Navbar/Navbar";
+import Todo from "@/components/Todos/index";
 import { getSession } from "next-auth/react";
 
 export default function todo() {

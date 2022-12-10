@@ -2,15 +2,15 @@ import React, { useState } from "react";
 
 import { signIn } from "next-auth/react";
 
-import Brandmark from "../Common/Brandmark";
+import Brandmark from "@/components/Common/Brandmark";
 
-import Form from "../Form/Form";
-import Email from "../Form/Email";
-import Submit from "../Form/Submit";
-import Heading from "../Typography/Heading";
+import Form from "@/components/Form/Form";
+import Email from "@/components/Form/Email";
+import Submit from "@/components/Form/Submit";
+import Heading from "@/components/Typography/Heading";
 import Wrapper from "./Wrapper";
-import FullScreen from "../Common/FullScreen";
-import Full from "../Common/Full";
+import FullScreen from "@/components/Common/FullScreen";
+import Full from "@/components/Common/Full";
 import GoogleSignIn from "./GoogleSignIn";
 import Separator from "./Separator";
 import Notify from "./Notify";

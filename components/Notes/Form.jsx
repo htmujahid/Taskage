@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { NoteContext } from "./index";
 
 import { useSWRConfig } from "swr";
+import { createNote } from "@/lib/app/notes";
 function Form() {
     const { setNotes } = useContext(NoteContext) ?? {};
 
@@ -45,31 +46,14 @@ function Form() {
             rotate: card.current.style.rotate,
         };
 
-        setNotes((prevNotes) => {
-            return [...prevNotes, data];
-        });
+        await createNote(data);
 
         noteInput.current.value = "";
         handleDiscard();
 
-        await fetch("/api/notes", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                card.current.style.backgroundColor = "";
-                card.current.style.rotate = "";
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-            .finally(() => {
-                mutate("/api/notes");
-            });
+        card.current.style.backgroundColor = "";
+        card.current.style.rotate = "";
+        mutate("/api/notes");
     }
 
     function generateRandomRotation() {

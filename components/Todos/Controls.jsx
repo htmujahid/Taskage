@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { TodoContext } from "./index";
 
 import { useSWRConfig } from "swr";
+import { deleteTodo } from "@/lib/app/todos";
 
 function Controls({ _id, setEditMode, setControls, setIsCardLoading }) {
     const { mutate } = useSWRConfig();
@@ -9,19 +10,9 @@ function Controls({ _id, setEditMode, setControls, setIsCardLoading }) {
 
     async function handleDelete() {
         setIsCardLoading(true);
-        setTodos((prev) => {
-            return prev.filter((t) => t._id !== _id);
-        });
+        await deleteTodo(_id);
         setIsCardLoading(false);
-        await fetch(`/api/todos/${_id}`, {
-            method: "DELETE",
-        })
-            .then((res) => res.json())
-            .then((data) => {})
-            .catch((err) => console.log(err))
-            .finally(() => {
-                mutate("/api/todos");
-            });
+        mutate("/api/todos");
     }
 
     function handleEdit() {

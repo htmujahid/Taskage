@@ -1,6 +1,6 @@
 import React from "react";
-import Wrapper from "../Common/Wrapper";
-import FlexWrapper from "../Layouts/FlexWrapper";
+import Wrapper from "@/components/Common/Wrapper";
+import FlexWrapper from "@/components/Layouts/FlexWrapper";
 function Skelton() {
     return (
         <div className="my-6">

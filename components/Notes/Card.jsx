@@ -1,3 +1,4 @@
+import { deleteNote } from "@/lib/app/notes";
 import React, { useState, useRef, useEffect } from "react";
 import { useSWRConfig } from "swr";
 import Controls from "./Controls";
@@ -14,10 +15,8 @@ function Card({ note }) {
         }
     }, [note, editMode]);
 
-    function handleDelete() {
-        fetch(`/api/notes/${note._id}`, {
-            method: "DELETE",
-        });
+    async function handleDelete() {
+        await deleteNote(note._id);
         mutate("/api/notes");
     }
 

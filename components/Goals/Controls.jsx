@@ -2,25 +2,16 @@ import React, { useContext } from "react";
 import { GoalContext } from "./index";
 
 import { useSWRConfig } from "swr";
+import { deleteGoal } from "@/lib/app/goals";
 
 function Controls({ _id, setEditMode, setControls, setIsCardLoading }) {
-    const { setGoals } = useContext(GoalContext) ?? {};
-
     const { mutate } = useSWRConfig();
 
     async function handleDelete() {
         setIsCardLoading(true);
-        setGoals((prev) => prev.filter((r) => r._id != _id));
+        await deleteGoal(todo._id);
         setIsCardLoading(false);
-        await fetch(`/api/goals/${_id}`, {
-            method: "DELETE",
-        })
-            .then((res) => res.json())
-            .then((data) => {})
-            .catch((err) => console.log(err))
-            .finally(() => {
-                mutate("/api/goals");
-            });
+        mutate("/api/goals");
     }
 
     function handleEdit() {

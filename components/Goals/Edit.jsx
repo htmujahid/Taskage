@@ -2,14 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import { GoalContext } from "./index";
 
 import { useSWRConfig } from "swr";
-import Wrapper from "../Common/Wrapper";
-import Form from "../Form/Form";
-import FormWrapper from "../Form/FormWrapper";
-import Date from "../Form/Date";
-import Input from "../Form/Input";
-import Submit from "../Form/Submit";
-import Full from "../Common/Full";
-import Discard from "../Form/Discard";
+import Wrapper from "@/components/Common/Wrapper";
+import Form from "@/components/Form/Form";
+import FormWrapper from "@/components/Form/FormWrapper";
+import Date from "@/components/Form/Date";
+import Input from "@/components/Form/Input";
+import Submit from "@/components/Form/Submit";
+import Full from "@/components/Common/Full";
+import Discard from "@/components/Form/Discard";
+import { updateGoal } from "@/lib/app/goals";
 
 function Edit({ goal, setEditMode }) {
     const { setGoals } = useContext(GoalContext) ?? {};
@@ -37,31 +38,12 @@ function Edit({ goal, setEditMode }) {
         };
 
         setIsLoading(true);
-        setGoals((prev) => {
-            const newGoals = prev.map((goal) => {
-                if (goal.id === goal.id) {
-                    return data;
-                }
-                return goal;
-            });
-            return newGoals;
-        });
+
+        await updateGoal(goal._id, data);
         setIsLoading(false);
         setEditMode(false);
 
-        await fetch(`/api/goals/${goal._id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-            .then((res) => res.json())
-            .then((data) => {})
-            .catch((err) => console.log(err))
-            .finally(() => {
-                mutate("/api/goals");
-            });
+        mutate("/api/goals");
     }
     return (
         <Wrapper>

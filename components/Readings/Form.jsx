@@ -2,15 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import { ReadingContext } from "./index";
 
 import { useSWRConfig } from "swr";
-import Submit from "../Form/Submit";
+import Submit from "@/components/Form/Submit";
 
-import Input from "../Form/Input";
-import FormWrapper from "../Form/FormWrapper";
-import Form from "../Form/Form";
-import Wrapper from "../Common/Wrapper";
-import Date from "../Form/Date";
-import Select from "../Form/Select";
-import Full from "../Common/Full";
+import Input from "@/components/Form/Input";
+import FormWrapper from "@/components/Form/FormWrapper";
+import Form from "@/components/Form/Form";
+import Wrapper from "@/components/Common/Wrapper";
+import Date from "@/components/Form/Date";
+import Select from "@/components/Form/Select";
+import Full from "@/components/Common/Full";
+import { createReading } from "@/lib/app/readings";
 
 const statusOptions = [
     { value: "", text: "Select a status" },
@@ -60,7 +61,8 @@ function FormComponent() {
         };
 
         setIsLoading(true);
-        setReadings((prev) => [...prev, data]);
+
+        await createReading(data);
         setTitle("");
         setAuthor("");
         setType("");
@@ -68,19 +70,8 @@ function FormComponent() {
         setEndDate("");
         setStatus("");
         setIsLoading(false);
-        await fetch("/api/readings", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-            .then((res) => res.json())
-            .then((data) => {})
-            .catch((err) => console.log(err))
-            .finally(() => {
-                mutate("/api/readings");
-            });
+
+        mutate("/api/readings");
     }
     return (
         <Wrapper>

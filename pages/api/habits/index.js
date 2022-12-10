@@ -1,7 +1,7 @@
-import { client } from "../../../lib/mongodb";
-import { ObjectId } from "mongodb";
-import { requireApiAuth } from "../../../utils/requireAuth";
 import { getSession } from "next-auth/react";
+import { requireApiAuth } from "@/lib/api/auth";
+import { createHabit, getHabits } from "@/lib/api/db/habits";
+
 export default async function handler(req, res) {
     const access = await requireApiAuth(req, res);
     if (!access) return;
@@ -10,28 +10,10 @@ export default async function handler(req, res) {
     switch (method) {
         case "GET":
             try {
-                await client.connect();
-                const database = client.db("taskage");
-                const collection = database.collection("habits");
-                // sort by created_at
-                const habits = await collection
-                    .find({
-                        $and: [
-                            {
-                                created_by: session.user.email,
-                            },
-                            {
-                                completed_at: null,
-                            },
-                        ],
-                    })
-                    .sort({ created_at: -1 })
-                    .toArray();
-                res.status(200).json(habits);
+                const result = await getHabits(session);
+                res.status(200).json(result);
             } catch (error) {
-                res.status(400).json({ success: false });
-            } finally {
-                await client.close();
+                res.status(500).json({ error: "Something went wrong." });
             }
             break;
         case "POST":
@@ -41,28 +23,11 @@ export default async function handler(req, res) {
                 return;
             }
 
-            const newHabit = {
-                title: data.title,
-                routine: data.routine,
-                updated_at: null,
-                completed_at: null,
-                created_by: session.user.email,
-                created_at: new Date().toISOString(),
-            };
             try {
-                await client.connect();
-                const database = client.db("taskage");
-                const collection = database.collection("habits");
-                const result = await collection.insertOne(newHabit);
-                console.log(
-                    `1 document was inserted with the _id: ${result.insertedId}`
-                );
-                res.status(200).json({ id: result.insertedId });
+                const result = await createHabit(data, session);
+                res.status(201).json(result);
             } catch (e) {
-                console.error(e);
-                res.status(500).json({ error: e });
-            } finally {
-                await client.close();
+                res.status(500).json({ error: "Something went wrong." });
             }
             break;
         default:

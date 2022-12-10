@@ -2,14 +2,15 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { HabitContext } from "./index";
 
 import { useSWRConfig } from "swr";
-import Full from "../Common/Full";
-import Discard from "../Form/Discard";
-import FormWrapper from "../Form/FormWrapper";
-import Form from "../Form/Form";
-import Input from "../Form/Input";
-import Wrapper from "../Common/Wrapper";
-import Select from "../Form/Select";
-import Submit from "../Form/Submit";
+import Full from "@/components/Common/Full";
+import Discard from "@/components/Form/Discard";
+import FormWrapper from "@/components/Form/FormWrapper";
+import Form from "@/components/Form/Form";
+import Input from "@/components/Form/Input";
+import Wrapper from "@/components/Common/Wrapper";
+import Select from "@/components/Form/Select";
+import Submit from "@/components/Form/Submit";
+import { updateHabit } from "@/lib/app/habits";
 
 const routineOptions = [
     { value: "", text: "Select a Routine" },
@@ -37,30 +38,11 @@ function Edit({ habit, setEditMode }) {
         };
 
         setIsLoading(true);
-        setHabits((prev) => {
-            const updated = prev.map((habit) => {
-                if (habit.id === data.id) {
-                    return data;
-                }
-                return habit;
-            });
-            return updated;
-        });
+        await updateHabit(habit._id, data);
         setIsLoading(false);
         setEditMode(false);
-        await fetch(`/api/habits/${habit._id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-            .then((res) => res.json())
-            .then((data) => {})
-            .catch((err) => console.log(err))
-            .finally(() => {
-                mutate("/api/habits");
-            });
+
+        mutate("/api/habits");
     }
 
     return (

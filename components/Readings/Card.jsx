@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Controls from "./Controls";
 import Edit from "./Edit";
-import CardLoading from "../Common/CardLoading";
+import CardLoading from "@/components/Common/CardLoading";
 
 function Card({ reading }) {
     const card = useRef();

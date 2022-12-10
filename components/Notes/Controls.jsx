@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { NoteContext } from "./index";
 import { useSWRConfig } from "swr";
+import { deleteNote } from "@/lib/app/notes";
 
 function Controls({ _id, setEditMode, setControls }) {
     const { setNotes } = useContext(NoteContext) ?? {};
@@ -8,19 +9,8 @@ function Controls({ _id, setEditMode, setControls }) {
     const { mutate } = useSWRConfig();
 
     async function handleDelete() {
-        setNotes((prev) => {
-            return prev.filter((note) => note._id !== _id);
-        });
-
-        await fetch(`/api/todos/${_id}`, {
-            method: "DELETE",
-        })
-            .then((res) => res.json())
-            .then((data) => {})
-            .catch((err) => console.log(err))
-            .finally(() => {
-                mutate("/api/todos");
-            });
+        await deleteNote(_id);
+        mutate("/api/todos");
     }
 
     function handleEdit() {

@@ -1,16 +1,13 @@
 import React, { useEffect, createContext, useState } from "react";
 export const TodoContext = createContext();
-
-import useSWR from "swr";
+import { useTodos } from "@/lib/app/todos";
 
 import Card from "./Card";
 import Form from "./Form";
 import Skelton from "./Skelton";
 
-const fetcher = (url) => fetch(url).then((r) => r.json());
-
 function index() {
-    const { data, error } = useSWR("/api/todos", fetcher);
+    const { data, error } = useTodos();
 
     const [todos, setTodos] = useState(data);
     const [completedTodos, setCompletedTodos] = useState([]);

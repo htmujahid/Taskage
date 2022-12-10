@@ -1,7 +1,12 @@
-import { client } from "../../../lib/mongodb";
-
-import { requireApiAuth } from "../../../utils/requireAuth";
 import { getSession } from "next-auth/react";
+
+import { requireApiAuth } from "@/lib/api/auth";
+import { countTodos } from "@/lib/api/db/todos";
+import { countScheduler } from "@/lib/api/db/scheduler";
+import { countGoals } from "@/lib/api/db/goals";
+import { countHabits } from "@/lib/api/db/habits";
+import { countNotes } from "@/lib/api/db/notes";
+import { countReadings } from "@/lib/api/db/readings";
 
 export default async function handler(req, res) {
     const access = await requireApiAuth(req, res);
@@ -13,39 +18,13 @@ export default async function handler(req, res) {
     switch (method) {
         case "GET":
             try {
-                await client.connect();
-                const db = client.db("taskage");
-                const todoCollection = db.collection("todos");
-                const todoCount = await todoCollection.countDocuments({
-                    created_by: session.user.email,
-                    completed_at: null,
-                });
-                const schedulerCollection = db.collection("scheduler");
-                const schedulerCount = await schedulerCollection.countDocuments(
-                    {
-                        created_by: session.user.email,
-                        completed_at: null,
-                    }
-                );
-                const goalCollection = db.collection("goals");
-                const goalCount = await goalCollection.countDocuments({
-                    created_by: session.user.email,
-                    completed_at: null,
-                });
-                const habitCollection = db.collection("habits");
-                const habitCount = await habitCollection.countDocuments({
-                    created_by: session.user.email,
-                    completed_at: null,
-                });
-                const noteCollection = db.collection("notes");
-                const noteCount = await noteCollection.countDocuments({
-                    created_by: session.user.email,
-                });
-                const readingCollection = db.collection("readings");
-                const readingCount = await readingCollection.countDocuments({
-                    created_by: session.user.email,
-                    status: "Reading",
-                });
+                const todoCount = await countTodos(session);
+                const schedulerCount = await countScheduler(session);
+                const goalCount = await countGoals(session);
+                const habitCount = await countHabits(session);
+                const noteCount = await countNotes(session);
+                const readingCount = await countReadings(session);
+
                 const summary = {
                     todoCount,
                     schedulerCount,
@@ -60,7 +39,7 @@ export default async function handler(req, res) {
             }
             break;
         default:
-            res.status(405).json({ message: "Method not allowed" });
-            break;
+            res.setHeader("Allow", ["GET"]);
+            res.status(405).end(`Method ${method} Not Allowed`);
     }
 }

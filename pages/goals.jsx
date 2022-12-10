@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
-import Navbar from "../components/Navbar/Navbar";
-import Goal from "../components/Goals/index";
+import Navbar from "@/components/Navbar/Navbar";
+import Goal from "@/components/Goals/index";
 import { getSession } from "next-auth/react";
 
 export default function goals() {

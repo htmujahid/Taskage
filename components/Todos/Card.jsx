@@ -1,18 +1,19 @@
 import React, { useState, useContext } from "react";
 
 import { useSWRConfig } from "swr";
-import Wrapper from "../Common/Wrapper";
-import FlexWrapper from "../Layouts/FlexWrapper";
+import Wrapper from "@/components/Common/Wrapper";
+import FlexWrapper from "@/components/Layouts/FlexWrapper";
 import Controls from "./Controls";
 import Edit from "./Edit";
-import Absolute from "../Common/Absolute";
-import Checkbox from "../Form/Checkbox";
+import Absolute from "@/components/Common/Absolute";
+import Checkbox from "@/components/Form/Checkbox";
 import Image from "next/image";
-import Text from "../Typography/Text";
-import Button from "../Widgets/Button";
-import Paragraph from "../Typography/Paragraph";
-import Full from "../Common/Full";
-import CardLoading from "../Common/CardLoading";
+import Text from "@/components/Typography/Text";
+import Button from "@/components/Widgets/Button";
+import Paragraph from "@/components/Typography/Paragraph";
+import Full from "@/components/Common/Full";
+import CardLoading from "@/components/Common/CardLoading";
+import { updateTodoStatus } from "@/lib/app/todos";
 
 function Card({ todo }) {
     const [detailed, setDetailed] = useState(false);
@@ -25,25 +26,12 @@ function Card({ todo }) {
 
     async function handleCompletion() {
         setIsCardLoading(true);
-        setIsCompleted((prev) => !prev);
+        const data = {
+            completed_at: isCompleted ? null : new Date().toISOString(),
+        };
+        await updateTodoStatus(todo._id, data);
         setIsCardLoading(false);
-        await fetch(`/api/todos/${todo._id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                completed_at: isCompleted ? null : new Date().toISOString(),
-            }),
-        })
-            .then((res) => res.json())
-            .then((data) => {})
-            .catch((err) => {
-                console.log(err);
-            })
-            .finally(() => {
-                mutate("/api/todos");
-            });
+        mutate("/api/todos");
     }
 
     function handleControls() {

@@ -3,13 +3,11 @@ export const NoteContext = createContext();
 
 import Form from "./Form";
 import Card from "./Card";
-import PageLoading from "../Common/PageLoading";
-import useSWR from "swr";
-
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+import PageLoading from "@/components/Common/PageLoading";
+import { useNotes } from "@/lib/app/notes";
 
 function index() {
-    const { data, error } = useSWR("/api/notes", fetcher);
+    const { data, error } = useNotes();
     const [notes, setNotes] = useState(data);
 
     const contextData = {

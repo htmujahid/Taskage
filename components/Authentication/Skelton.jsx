@@ -1,6 +1,6 @@
 import React from "react";
-import FullScreen from "../Common/FullScreen";
-import Brandmark from "../Common/Brandmark";
+import FullScreen from "@/components/Common/FullScreen";
+import Brandmark from "@/components/Common/Brandmark";
 import Wrapper from "./Wrapper";
 function Skelton() {
     return (

@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { HabitContext } from "./index";
 
 import { useSWRConfig } from "swr";
-import Submit from "../Form/Submit";
-import Input from "../Form/Input";
-import FormWrapper from "../Form/FormWrapper";
-import Form from "../Form/Form";
-import Wrapper from "../Common/Wrapper";
-import Full from "../Common/Full";
-import Select from "../Form/Select";
+import Submit from "@/components/Form/Submit";
+import Input from "@/components/Form/Input";
+import FormWrapper from "@/components/Form/FormWrapper";
+import Form from "@/components/Form/Form";
+import Wrapper from "@/components/Common/Wrapper";
+import Full from "@/components/Common/Full";
+import Select from "@/components/Form/Select";
+import { createHabit } from "@/lib/app/habits";
 const routineOptions = [
     { value: "", text: "Select a routine" },
     { value: "daily", text: "Daily" },
@@ -23,7 +24,7 @@ function FormComponent() {
     const [routine, setRoutine] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         if (!title.trim() || !routine.trim()) {
             return;
@@ -33,24 +34,14 @@ function FormComponent() {
             routine,
         };
         setIsLoading(true);
-        setHabits((prev) => [...prev, data]);
+
+        await createHabit(data);
+
         setTitle("");
         setRoutine("");
         setIsLoading(false);
 
-        fetch("/api/habits", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-            .then((res) => res.json())
-            .then((data) => {})
-            .catch((err) => console.log(err))
-            .finally(() => {
-                mutate("/api/habits");
-            });
+        mutate("/api/habits");
     }
     return (
         <Wrapper>

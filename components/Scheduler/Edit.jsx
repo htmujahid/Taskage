@@ -2,14 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import { SchedulerContext } from "./index";
 
 import { useSWRConfig } from "swr";
-import Wrapper from "../Common/Wrapper";
-import Form from "../Form/Form";
-import FormWrapper from "../Form/FormWrapper";
-import Time from "../Form/Time";
-import Input from "../Form/Input";
+import Wrapper from "@/components/Common/Wrapper";
+import Form from "@/components/Form/Form";
+import FormWrapper from "@/components/Form/FormWrapper";
+import Time from "@/components/Form/Time";
+import Input from "@/components/Form/Input";
 import Image from "next/image";
-import Discard from "../Form/Discard";
-import Submit from "../Form/Submit";
+import Discard from "@/components/Form/Discard";
+import Submit from "@/components/Form/Submit";
+import { updateScheduler } from "@/lib/app/scheduler";
 function Edit({ task, setEditMode, setIsTime }) {
     const { setTasks } = useContext(SchedulerContext) ?? {};
 
@@ -32,14 +33,9 @@ function Edit({ task, setEditMode, setIsTime }) {
             completed_at: task.completed_at,
         };
         setIsLoading(true);
-        setTasks((prev) =>
-            prev.map((task) => {
-                if (task._id === task._id) {
-                    return data;
-                }
-                return task;
-            })
-        );
+
+        await updateScheduler(task._id, data);
+
         if (time.hours != 0 || time.minutes != 0 || time.seconds != 0) {
             setIsTime(true);
         } else {
@@ -49,19 +45,7 @@ function Edit({ task, setEditMode, setIsTime }) {
         setShowTime(false);
         setIsLoading(false);
 
-        fetch(`/api/scheduler/${task._id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-            .then((res) => res.json())
-            .then((data) => {})
-            .catch((err) => console.log(err))
-            .finally(() => {
-                mutate("/api/scheduler");
-            });
+        mutate("/api/scheduler");
     }
 
     return (

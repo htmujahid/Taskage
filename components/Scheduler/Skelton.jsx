@@ -1,9 +1,9 @@
 import React from "react";
 import Form from "./Form";
-import Absolute from "../Common/Absolute";
-import Wrapper from "../Common/Wrapper";
-import FlexWrapper from "../Layouts/FlexWrapper";
-import Full from "../Common/Full";
+import Absolute from "@/components/Common/Absolute";
+import Wrapper from "@/components/Common/Wrapper";
+import FlexWrapper from "@/components/Layouts/FlexWrapper";
+import Full from "@/components/Common/Full";
 
 function Skelton() {
     return (

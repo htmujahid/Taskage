@@ -1,17 +1,19 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { TodoContext } from "./index";
-
 import { useSWRConfig } from "swr";
-import Wrapper from "../Common/Wrapper";
-import Date from "../Form/Date";
-import Form from "../Form/Form";
-import FormWrapper from "../Form/FormWrapper";
-import Input from "../Form/Input";
-import Submit from "../Form/Submit";
-import Textarea from "../Form/Textarea";
-import Discard from "../Form/Discard";
-import Select from "../Form/Select";
-import Checkbox from "../Form/Checkbox";
+
+import { createTodo } from "@/lib/app/todos";
+
+import Wrapper from "@/components/Common/Wrapper";
+import Checkbox from "@/components/Form/Checkbox";
+import Date from "@/components/Form/Date";
+import FormWrapper from "@/components/Form/FormWrapper";
+import Input from "@/components/Form/Input";
+import Select from "@/components/Form/Select";
+import Submit from "@/components/Form/Submit";
+import Textarea from "@/components/Form/Textarea";
+import Form from "@/components/Form/Form";
+
 const categorOptions = [
     { value: "", text: "Select a category" },
     { value: "personal", text: "Personal" },
@@ -26,23 +28,22 @@ const priorityOptions = [
     { value: "high", text: "High" },
 ];
 
-function Edit({ todo, setEditMode }) {
+function FormComponent() {
     const { mutate } = useSWRConfig();
-    const { setTodos } = useContext(TodoContext) ?? {};
+    // inputs
+    const [title, setTitle] = useState("");
+    const [date, setDate] = useState("");
+    const [description, setDescription] = useState("");
+    const [priority, setPriority] = useState("");
+    const [category, setCategory] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const [additional, setAdditional] = useState(false);
-
-    const [title, setTitle] = useState(todo.title);
-    const [date, setDate] = useState(todo.date);
-    const [description, setDescription] = useState(todo.description);
-    const [priority, setPriority] = useState(todo.priority);
-    const [category, setCategory] = useState(todo.category);
-    const [isLoading, setIsLoading] = useState(false);
 
     async function handleSubmit(e) {
         e.preventDefault();
 
-        if (!title.trim() || !date.trim()) {
+        if (!title.trim() || !date.trim() === "") {
             return;
         }
 
@@ -52,32 +53,21 @@ function Edit({ todo, setEditMode }) {
             date,
             priority,
             category,
-            completed_at: todo.completed_at,
+            completed_at: null,
         };
         setIsLoading(true);
-        setTodos((prev) => {
-            const index = prev.findIndex((t) => t.id === todo.id);
-            prev[index] = data;
-            return [...prev];
-        });
-        setEditMode(false);
+
+        await createTodo(data);
+
+        setTitle("");
+        setDate("");
+        setDescription("");
+        setPriority("");
+        setCategory("");
         setIsLoading(false);
-        await fetch(`/api/todos/${todo._id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-            .then((res) => res.json())
-            .then((data) => {})
-            .catch((err) => {
-                console.log(err);
-            })
-            .finally(() => {
-                mutate("/api/todos");
-            });
+        mutate("/api/todos");
     }
+
     return (
         <Wrapper>
             <Form onSubmit={handleSubmit}>
@@ -119,20 +109,19 @@ function Edit({ todo, setEditMode }) {
                         </FormWrapper>
                     </React.Fragment>
                 )}
-                <FormWrapper type={4} className={"w-full"}>
+                <FormWrapper type={4}>
                     <Checkbox
                         check={additional}
                         setCheck={setAdditional}
                         label="Additional Details"
                     />
-                    <FormWrapper type={4} className={"w-full"}>
-                        <Discard setEditMode={setEditMode}>Discard</Discard>
-                        <Submit isLoading={isLoading}>SubmitChanges</Submit>
-                    </FormWrapper>
+                    <Submit className={"sm:w-80"} isLoading={isLoading}>
+                        Add Todo
+                    </Submit>
                 </FormWrapper>
             </Form>
         </Wrapper>
     );
 }
 
-export default Edit;
+export default FormComponent;

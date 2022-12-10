@@ -4,13 +4,11 @@ export const SchedulerContext = createContext();
 import Form from "./Form";
 import Card from "./Card";
 
-import useSWR from "swr";
 import Skelton from "./Skelton";
-
-const fetcher = (url) => fetch(url).then((r) => r.json());
+import { useSchedulers } from "@/lib/app/scheduler";
 
 function index() {
-    const { data, error } = useSWR("/api/scheduler", fetcher);
+    const { data, error } = useSchedulers();
 
     const [tasks, setTasks] = useState(data);
 

@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { SchedulerContext } from "./index";
 
 import { useSWRConfig } from "swr";
+import { deleteScheduler } from "@/lib/app/scheduler";
 
 function Controls({
     task,
@@ -18,12 +19,8 @@ function Controls({
 
     async function handleDelete() {
         setIsCardLoading(true);
-        setTasks((prev) => prev.filter((t) => t._id != task._id));
+        await deleteScheduler(task._id);
         setIsCardLoading(false);
-
-        await fetch(`/api/scheduler/${task._id}`, {
-            method: "DELETE",
-        });
         mutate("/api/scheduler");
     }
 

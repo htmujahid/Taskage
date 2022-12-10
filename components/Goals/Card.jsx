@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import Controls from "./Controls";
 import Edit from "./Edit";
-import Wrapper from "../Common/Wrapper";
-import Absolute from "../Common/Absolute";
-import Button from "../Widgets/Button";
-import FlexWrapper from "../Layouts/FlexWrapper";
-import Text from "../Typography/Text";
-import Input from "../Form/Input";
-import Checkbox from "../Form/Checkbox";
+import Wrapper from "@/components/Common/Wrapper";
+import Absolute from "@/components/Common/Absolute";
+import Button from "@/components/Widgets/Button";
+import FlexWrapper from "@/components/Layouts/FlexWrapper";
+import Text from "@/components/Typography/Text";
+import Checkbox from "@/components/Form/Checkbox";
 import Image from "next/image";
-import CardLoading from "../Common/CardLoading";
+import CardLoading from "@/components/Common/CardLoading";
+import { updateGoalStatus } from "@/lib/app/goals";
 
 function Card({ goal }) {
     const [isCompleted, setIsCompleted] = useState(goal.completed_at);
@@ -19,20 +19,12 @@ function Card({ goal }) {
 
     async function handleCompletion() {
         setIsCardLoading(true);
-        await fetch(`/api/goals/${goal._id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                completed_at: isCompleted ? null : new Date().toISOString(),
-            }),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setIsCardLoading(false);
-                setIsCompleted(!isCompleted);
-            });
+        const data = {
+            completed_at: isCompleted ? null : new Date().toISOString(),
+        };
+        await updateGoalStatus(goal._id, data);
+        setIsCardLoading(false);
+        setIsCompleted(!isCompleted);
     }
 
     function handleControls() {

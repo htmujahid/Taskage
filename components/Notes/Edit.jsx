@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { NoteContext } from "./index";
 
 import { useSWRConfig } from "swr";
+import { updateNote } from "@/lib/app/notes";
 function Edit({ note, editMode, setEditMode }) {
     const { setNotes } = useContext(NoteContext) ?? {};
 
@@ -27,34 +28,12 @@ function Edit({ note, editMode, setEditMode }) {
             rotate: note.rotate,
         };
 
-        setNotes((prev) => {
-            const newNotes = prev.map((n) => {
-                if (n._id === note._id) {
-                    return { ...n, ...data };
-                }
-                return n;
-            });
-            return newNotes;
-        });
+        await updateNote(note._id, data);
 
         noteInput.current.value = "";
         handleDiscard();
 
-        await fetch(`/api/notes/${note._id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-            .then((res) => res.json())
-            .then((data) => {})
-            .catch((err) => {
-                console.log(err);
-            })
-            .finally(() => {
-                mutate("/api/notes");
-            });
+        mutate("/api/notes");
     }
 
     function handleDiscard() {

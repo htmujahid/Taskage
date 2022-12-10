@@ -2,13 +2,14 @@ import React, { useState, useRef, useContext } from "react";
 import { SchedulerContext } from "./index";
 
 import { useSWRConfig } from "swr";
-import Submit from "../Form/Submit";
-import Time from "../Form/Time";
-import Input from "../Form/Input";
-import FormWrapper from "../Form/FormWrapper";
-import Form from "../Form/Form";
-import Wrapper from "../Common/Wrapper";
+import Submit from "@/components/Form/Submit";
+import Time from "@/components/Form/Time";
+import Input from "@/components/Form/Input";
+import FormWrapper from "@/components/Form/FormWrapper";
+import Form from "@/components/Form/Form";
+import Wrapper from "@/components/Common/Wrapper";
 import Image from "next/image";
+import { createScheduler } from "@/lib/app/scheduler";
 
 function FormComponent() {
     const { setTasks } = useContext(SchedulerContext) ?? {};
@@ -24,7 +25,7 @@ function FormComponent() {
     });
     const [isLoading, setIsLoading] = useState(false);
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
         if (!title.trim()) {
             return;
@@ -42,7 +43,7 @@ function FormComponent() {
             completed_at: null,
         };
         setIsLoading(true);
-        setTasks((prev) => [data, ...prev]);
+        await createScheduler(data);
         setTitle("");
         setTime({
             hours: 0,
@@ -50,20 +51,9 @@ function FormComponent() {
             seconds: 0,
         });
         setIsLoading(false);
-        fetch("/api/scheduler", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-            .then((res) => res.json())
-            .then((data) => {})
-            .catch((err) => console.log(err))
-            .finally(() => {
-                setShowTime(false);
-                mutate("/api/scheduler");
-            });
+
+        setShowTime(false);
+        mutate("/api/scheduler");
     }
 
     return (

@@ -2,17 +2,16 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { GoalContext } from "./index";
 
 import { useSWRConfig } from "swr";
-import Submit from "../Form/Submit";
-import Date from "../Form/Date";
-import Input from "../Form/Input";
-import FormWrapper from "../Form/FormWrapper";
-import Form from "../Form/Form";
-import Wrapper from "../Common/Wrapper";
-import Full from "../Common/Full";
+import Submit from "@/components/Form/Submit";
+import Date from "@/components/Form/Date";
+import Input from "@/components/Form/Input";
+import FormWrapper from "@/components/Form/FormWrapper";
+import Form from "@/components/Form/Form";
+import Wrapper from "@/components/Common/Wrapper";
+import Full from "@/components/Common/Full";
+import { createGoal } from "@/lib/app/goals";
 
 function FormComponent() {
-    const { setGoals } = useContext(GoalContext) ?? {};
-
     const { mutate } = useSWRConfig();
 
     const [startDate, setStartDate] = useState("");
@@ -20,7 +19,7 @@ function FormComponent() {
     const [title, setTitle] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
 
         if (!title.trim() || !startDate.trim() || !endDate.trim()) {
@@ -34,25 +33,15 @@ function FormComponent() {
         };
 
         setIsLoading(true);
-        setGoals((prev) => [...prev, data]);
+
+        await createGoal(data);
+
         setTitle("");
         setStartDate("");
         setEndDate("");
         setIsLoading(false);
 
-        fetch("/api/goals", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-            .then((res) => res.json())
-            .then((data) => {})
-            .catch((err) => console.log(err))
-            .finally(() => {
-                mutate("/api/goals");
-            });
+        mutate("/api/goals");
     }
     return (
         <Wrapper>

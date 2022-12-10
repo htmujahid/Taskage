@@ -2,12 +2,11 @@ import React, { useState, useEffect, createContext } from "react";
 export const HabitContext = createContext();
 import Card from "./Card";
 import Form from "./Form";
-import useSWR from "swr";
 import Skelton from "./Skelton";
+import { useHabits } from "@/lib/app/habits";
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
 function index() {
-    const { data, error } = useSWR("/api/habits", fetcher);
+    const { data, error } = useHabits();
     const [habits, setHabits] = useState(data);
 
     const [accomplished, setAccomplished] = useState([]);

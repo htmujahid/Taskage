@@ -3,12 +3,11 @@ export const GoalContext = createContext();
 
 import Card from "./Card";
 import Form from "./Form";
-import useSWR from "swr";
 import Skelton from "./Skelton";
+import { useGoals } from "@/lib/app/goals";
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
 function index() {
-    const { data, error } = useSWR("/api/goals", fetcher);
+    const { data, error } = useGoals();
     const [goals, setGoals] = useState(data);
 
     const contextData = {

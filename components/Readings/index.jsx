@@ -4,12 +4,11 @@ export const ReadingContext = createContext();
 import Card from "./Card";
 import Form from "./Form";
 
-import useSWR from "swr";
 import Skelton from "./Skelton";
+import { useReadings } from "@/lib/app/readings";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
 function index() {
-    const { data, error } = useSWR("/api/readings", fetcher);
+    const { data, error } = useReadings();
 
     const [readings, setReadings] = useState(data);
 
