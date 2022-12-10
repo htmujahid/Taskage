@@ -30,7 +30,7 @@ function Sidebar() {
             className={`bg-white duration-300 ${isOpen ? "w-64" : "w-16"} `}
             aria-label="Sidebar"
         >
-            <div className="py-4 pl-3 rounded min-h-screen border flex flex-col justify-between">
+            <div className="py-4 px-3 rounded min-h-screen border flex flex-col justify-between">
                 <button
                     className="flex items-center pl-2.5 mb-5 opacity-50"
                     onClick={() => setIsOpen(!isOpen)}

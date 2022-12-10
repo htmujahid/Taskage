@@ -16,7 +16,7 @@ function HeroSection() {
                         teams achieve their goals.
                     </p>
                     <Link
-                        href="#"
+                        href="/auth/signin"
                         className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 duration-100"
                     >
                         Get started
@@ -43,7 +43,7 @@ function HeroSection() {
                 </div>
                 <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
                     <img
-                        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png"
+                        src="https://res.cloudinary.com/monday-blogs/w_1700,c_fit/fl_lossy,f_auto,q_auto/wp-blog/2020/12/monday.com-task-management-software.png"
                         alt="mockup"
                     />
                 </div>
