@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useRef } from "react";
 import Sidebar from "@/components/Appbar/Sidebar";
 import Navbar from "./Navbar";
 function AppbarWrapper({ children }) {
     return (
-        <div className="flex">
+        <div className="flex overflow-y-hidden h-screen">
             <Sidebar />
-            <div className="flex-1 overflow-x-auto ">
+            <div className="flex-1">
                 <Navbar />
-                <div className="h-screen overflow-y-auto pb-10">{children}</div>
+                <div className="pb-10 h-screen overflow-y-auto">{children}</div>
             </div>
         </div>
     );

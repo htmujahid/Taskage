@@ -56,11 +56,11 @@ function Edit({ reading, card, setEditMode }) {
         >
             <div className="absolute right-2 top-2">
                 <button className="block mb-2" onClick={handleClose}>
-                    <img src={`./assets/icons/close.svg`} alt="" />
+                    <img src={`/assets/icons/close.svg`} alt="" />
                 </button>
                 {!isLoading ? (
                     <button type="submit" className="block mb-2">
-                        <img src={`./assets/icons/save.svg`} alt="" />
+                        <img src={`/assets/icons/save.svg`} alt="" />
                     </button>
                 ) : (
                     <span className="">

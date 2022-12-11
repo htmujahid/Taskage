@@ -96,7 +96,7 @@ function Form() {
                         onClick={handleAdd}
                     >
                         <img
-                            src="./assets/icons/add.svg"
+                            src="/assets/icons/add.svg"
                             alt=""
                             className="opacity-30 w-24"
                         />

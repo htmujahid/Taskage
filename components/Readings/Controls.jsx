@@ -23,10 +23,10 @@ function Controls({ _id, setEditMode, setIsCardLoading }) {
     return (
         <React.Fragment>
             <button className="block mb-2" onClick={handleDelete}>
-                <img src={`./assets/icons/delete.svg`} alt="" />
+                <img src={`/assets/icons/delete.svg`} alt="" />
             </button>
             <button className="block mb-2" onClick={handleEdit}>
-                <img src={`./assets/icons/edit.svg`} alt="" />
+                <img src={`/assets/icons/edit.svg`} alt="" />
             </button>
         </React.Fragment>
     );

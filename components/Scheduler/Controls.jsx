@@ -70,7 +70,7 @@ function Controls({
                 className="py-1 px-2 text-sm font-medium text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:outline-none"
                 onClick={handleEdit}
             >
-                <img src="./assets/icons/edit.svg" alt="" />
+                <img src="/assets/icons/edit.svg" alt="" />
             </button>
             {!isCompleted && (
                 <button
@@ -79,7 +79,7 @@ function Controls({
                     onClick={handlePlay}
                 >
                     <img
-                        src={`./assets/icons/${
+                        src={`/assets/icons/${
                             isRunning ? "pause" : "play"
                         }.svg`}
                         alt=""
@@ -91,7 +91,7 @@ function Controls({
                 className="py-1 px-2 text-sm font-medium text-gray-900 bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:outline-none"
                 onClick={handleDelete}
             >
-                <img src="./assets/icons/delete.svg" alt="" />
+                <img src="/assets/icons/delete.svg" alt="" />
             </button>
         </div>
     );
