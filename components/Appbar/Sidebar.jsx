@@ -3,7 +3,9 @@ import Link from "next/link";
 
 import { useSession, signOut } from "next-auth/react";
 
-function Sidebar({ isOpen, setIsOpen }) {
+function Sidebar() {
+    const [isOpen, setIsOpen] = useState(false);
+
     const { data: session } = useSession();
 
     return (
@@ -31,7 +33,7 @@ function Sidebar({ isOpen, setIsOpen }) {
             </div>
 
             <div
-                className={`absolute sm:static top-0 left-0 right-0 bottom-0 z-10 bg-white h-screen duration-300 pt-6 overflow-y-auto overflow-x-clip ${
+                className={`absolute top-0 left-0 right-0 bottom-0 z-10 bg-white h-screen duration-300 pt-6 overflow-y-auto overflow-x-clip ${
                     isOpen
                         ? "w-64 translate-x-0 "
                         : "w-16 -translate-x-64 sm:translate-x-0"
