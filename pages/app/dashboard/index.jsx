@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { getSession } from "next-auth/react";
 
 import Head from "next/head";
+import Alert from "@/components/Common/Alert";
+import Summary from "@/components/Summary/index";
 import AppbarWrapper from "@/components/Appbar/AppbarWrapper";
-import ComingSoon from "@/components/Common/ComingSoon";
 
-export default function index() {
+export default function dashboard() {
     return (
         <React.Fragment>
             <Head>
@@ -13,9 +14,7 @@ export default function index() {
             </Head>
             {/* <Alert /> */}
             <AppbarWrapper>
-                <React.Fragment>
-                    <ComingSoon />
-                </React.Fragment>
+                <Summary />
             </AppbarWrapper>
         </React.Fragment>
     );

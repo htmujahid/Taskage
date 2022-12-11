@@ -21,7 +21,7 @@ function HabitCard({ count }) {
                         <Text type={4}>Unfinished: {count}</Text>
                     </div>
                     <div>
-                        <Link href="/habits">
+                        <Link href="/app/private/habits">
                             <Image
                                 src="/assets/icons/linking.svg"
                                 width={16}

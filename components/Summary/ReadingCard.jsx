@@ -21,7 +21,7 @@ function ReadingCard({ count }) {
                         <Text type={4}>Reading: {count}</Text>
                     </div>
                     <div>
-                        <Link href="/readings">
+                        <Link href="/app/private/readings">
                             <Image
                                 src="/assets/icons/linking.svg"
                                 width={16}

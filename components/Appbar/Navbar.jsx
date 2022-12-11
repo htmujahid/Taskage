@@ -57,8 +57,8 @@ function Navbar() {
     }, [path]);
 
     return (
-        <nav className={`${navbarList.length == 0 ? "hidden" : "block"}`}>
-            <div className="shadow">
+        <nav className={`ml-16 sm:ml-0`}>
+            <div className="shadow h-12">
                 <div className="px-4 py-3 md:px-6">
                     <div className="flex items-center">
                         <ul className="flex flex-row mt-0 mr-6 space-x-8 font-medium overflow-x-auto hide-scrollbar">

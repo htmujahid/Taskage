@@ -21,7 +21,7 @@ function GoalCard({ count }) {
                         <Text type={4}>Unaccomplished: {count}</Text>
                     </div>
                     <div>
-                        <Link href="/goals">
+                        <Link href="/app/private/goals">
                             <Image
                                 src="/assets/icons/linking.svg"
                                 width={16}

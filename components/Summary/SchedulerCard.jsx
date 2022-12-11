@@ -22,7 +22,7 @@ function TaskCard({ count }) {
                         <Text type={4}>Pending: {count}</Text>
                     </div>
                     <div>
-                        <Link href="/scheduler">
+                        <Link href="/app/private/scheduler">
                             <Image
                                 src="/assets/icons/linking.svg"
                                 width={16}

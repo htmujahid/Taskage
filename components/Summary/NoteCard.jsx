@@ -23,7 +23,7 @@ function NoteCard({ count }) {
                         </div>
                     </div>
                     <div>
-                        <Link href="/notes">
+                        <Link href="/app/private/notes">
                             <Image
                                 src="/assets/icons/linking.svg"
                                 width={16}

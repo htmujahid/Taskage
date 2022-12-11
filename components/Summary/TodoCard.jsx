@@ -21,7 +21,7 @@ function TodoCard({ count }) {
                         <Text type={4}>Todo: {count}</Text>
                     </div>
                     <div>
-                        <Link href="/todos">
+                        <Link href="/app/private/todos">
                             <Image
                                 src="/assets/icons/linking.svg"
                                 width={16}
