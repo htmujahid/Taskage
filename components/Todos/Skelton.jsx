@@ -42,13 +42,13 @@ function Skelton() {
                                     <div className="w-2 h-6 bg-gray-200 rounded"></div>
                                 </div>
                             </FlexWrapper>
-                            <Full
+                            <Absolute
                                 className={
                                     "absolute mt-3 left-1/2 -translate-x-1/2 w-6"
                                 }
                             >
                                 <div className="h-6 w-6 bg-gray-200 rounded-full"></div>
-                            </Full>
+                            </Absolute>
                         </Wrapper>
                     ))}
                 </div>

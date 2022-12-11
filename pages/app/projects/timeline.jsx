@@ -5,7 +5,7 @@ import Head from "next/head";
 import AppbarWrapper from "@/components/Appbar/AppbarWrapper";
 import ComingSoon from "@/components/Common/ComingSoon";
 
-export default function backlog() {
+export default function timeline() {
     return (
         <React.Fragment>
             <Head>
