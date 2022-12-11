@@ -42,7 +42,7 @@ const projectsNavbarList = [
         path: "/app/projects/list",
     },
 ];
-function Navbar() {
+function Navbar({ isOpen, setIsOpen }) {
     const router = useRouter();
     const path = router.pathname;
 
@@ -57,7 +57,13 @@ function Navbar() {
     }, [path]);
 
     return (
-        <nav className={`ml-16 w-[calc(100vw-64px)]`}>
+        <nav
+            className={`duration-300 ${
+                isOpen
+                    ? "ml-64 w-[calc(100vw-256px)]"
+                    : "ml-16 w-[calc(100vw-64px)]"
+            }`}
+        >
             <div className="shadow h-12">
                 <div className="px-4 py-3 md:px-6">
                     <div className="flex items-center">

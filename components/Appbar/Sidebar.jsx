@@ -3,9 +3,7 @@ import Link from "next/link";
 
 import { useSession, signOut } from "next-auth/react";
 
-function Sidebar() {
-    const [isOpen, setIsOpen] = useState(false);
-
+function Sidebar({ isOpen, setIsOpen }) {
     const { data: session } = useSession();
 
     return (
