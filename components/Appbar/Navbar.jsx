@@ -57,7 +57,7 @@ function Navbar() {
     }, [path]);
 
     return (
-        <nav className={`ml-16 sm:ml-0`}>
+        <nav className={`ml-16 sm:ml-0 w-[calc(100vw-64px)]`}>
             <div className="shadow h-12">
                 <div className="px-4 py-3 md:px-6">
                     <div className="flex items-center">
