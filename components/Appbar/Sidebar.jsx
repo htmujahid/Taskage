@@ -8,15 +8,6 @@ function Sidebar() {
 
     const { data: session } = useSession();
 
-    if (typeof window !== "undefined") {
-        useEffect(() => {
-            if (isOpen && window.innerWidth < 620) {
-                document.body.style.overflow = "hidden";
-            } else {
-                document.body.style.overflow = "unset";
-            }
-        }, [isOpen]);
-    }
     return (
         <React.Fragment>
             <div

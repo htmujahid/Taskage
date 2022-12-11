@@ -3,6 +3,7 @@ import Sidebar from "@/components/Appbar/Sidebar";
 import Navbar from "./Navbar";
 function AppbarWrapper({ children }) {
     if (typeof window !== "undefined") {
+        document.body.style.overflow = "hidden";
     }
     return (
         <div className="flex">
