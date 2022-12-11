@@ -7,7 +7,7 @@ function AppbarWrapper({ children }) {
             <Sidebar />
             <div className="flex-1">
                 <Navbar />
-                <div className="pb-10 h-screen overflow-y-auto">{children}</div>
+                <div className="pb-10 h-screen overflow-y-auto ml-0 sm:ml-16">{children}</div>
             </div>
         </div>
     );
