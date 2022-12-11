@@ -58,10 +58,10 @@ function Navbar({ isOpen, setIsOpen }) {
 
     return (
         <nav
-            className={`duration-300 ${
+            className={`ml-16 w-[calc(100vw-64px)] duration-300 ${
                 isOpen
-                    ? "ml-64 w-[calc(100vw-256px)]"
-                    : "ml-16 w-[calc(100vw-64px)]"
+                    ? "sm:ml-64 sm:w-[calc(100vw-256px)]"
+                    : ""
             }`}
         >
             <div className="shadow h-12">
