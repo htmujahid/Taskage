@@ -29,10 +29,10 @@ function AddList() {
                     ></input>
                 ) : (
                     <button
-                        className="text-lg text-gray-500 font-semibold w-full text-left"
+                        className="text-lg text-gray-500 font-semibold w-full"
                         onClick={() => setIsAddMode(true)}
                     >
-                        Add List
+                        Add New List
                     </button>
                 )}
             </div>
