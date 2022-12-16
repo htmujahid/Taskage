@@ -12,6 +12,7 @@ function AddList() {
             title,
         };
         await createList(data);
+        setTitle("");
         mutate("/api/workspace/lists");
     }
 
