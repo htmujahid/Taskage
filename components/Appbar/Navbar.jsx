@@ -28,20 +28,6 @@ const privateNavbarList = [
     },
 ];
 
-const projectsNavbarList = [
-    {
-        name: "Board",
-        path: "/app/projects/board",
-    },
-    {
-        name: "Backlog",
-        path: "/app/projects/backlog",
-    },
-    {
-        name: "List",
-        path: "/app/projects/list",
-    },
-];
 function Navbar({ isOpen, setIsOpen }) {
     const router = useRouter();
     const path = router.pathname;
@@ -51,8 +37,6 @@ function Navbar({ isOpen, setIsOpen }) {
     useEffect(() => {
         if (path.includes("/app/private")) {
             setNavbarList(privateNavbarList);
-        } else if (path.includes("/app/projects")) {
-            setNavbarList(projectsNavbarList);
         }
     }, [path]);
 

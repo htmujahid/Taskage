@@ -1,27 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Wrapper from "@/components/Common/Wrapper";
 import FlexWrapper from "@/components/Layouts/FlexWrapper";
 import Text from "@/components/Typography/Text";
-function ReadingCard({ count }) {
+function NoteCard({ count }) {
     return (
         <React.Fragment>
             <Wrapper>
                 <FlexWrapper type={1}>
                     <div>
                         <Image
-                            src="/assets/images/book.png"
+                            src="/assets/images/sticky.png"
                             width={48}
                             height={48}
-                            alt="book"
+                            alt="notes"
                         />
                     </div>
                     <div className="flex-1">
-                        <Text type={4}>Reading: {count}</Text>
+                        <div>
+                            <Text type={4}>Total: {count}</Text>
+                        </div>
                     </div>
                     <div>
-                        <Link href="/app/private/readings">
+                        <Link href="/app/sticky">
                             <Image
                                 src="/assets/icons/linking.svg"
                                 width={16}
@@ -36,4 +38,4 @@ function ReadingCard({ count }) {
     );
 }
 
-export default ReadingCard;
+export default NoteCard;

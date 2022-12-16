@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Wrapper from "@/components/Common/Wrapper";
 import FlexWrapper from "@/components/Layouts/FlexWrapper";
 import Text from "@/components/Typography/Text";
-function NoteCard({ count }) {
+function NoteTaking({ count }) {
     return (
         <React.Fragment>
             <Wrapper>
@@ -14,16 +14,14 @@ function NoteCard({ count }) {
                             src="/assets/images/notes.png"
                             width={48}
                             height={48}
-                            alt="notes"
+                            alt="book"
                         />
                     </div>
                     <div className="flex-1">
-                        <div>
-                            <Text type={4}>Total: {count}</Text>
-                        </div>
+                        <Text type={4}>Notes: {0}</Text>
                     </div>
                     <div>
-                        <Link href="/app/private/notes">
+                        <Link href="/app/notes">
                             <Image
                                 src="/assets/icons/linking.svg"
                                 width={16}
@@ -38,4 +36,4 @@ function NoteCard({ count }) {
     );
 }
 
-export default NoteCard;
+export default NoteTaking;

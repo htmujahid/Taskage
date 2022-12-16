@@ -3,9 +3,9 @@ import { getSession } from "next-auth/react";
 
 import Head from "next/head";
 import AppbarWrapper from "@/components/Appbar/AppbarWrapper";
-import ComingSoon from "@/components/Common/ComingSoon";
+import Boards from "@/components/Workspace";
 
-export default function list() {
+export default function index() {
     return (
         <React.Fragment>
             <Head>
@@ -14,7 +14,7 @@ export default function list() {
             {/* <Alert /> */}
             <AppbarWrapper>
                 <React.Fragment>
-                    <ComingSoon />
+                    <Boards />
                 </React.Fragment>
             </AppbarWrapper>
         </React.Fragment>

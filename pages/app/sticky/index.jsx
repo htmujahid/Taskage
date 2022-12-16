@@ -4,7 +4,7 @@ import Note from "@/components/Notes/index";
 import { getSession } from "next-auth/react";
 import AppbarWrapper from "@/components/Appbar/AppbarWrapper";
 
-export default function notes() {
+export default function index() {
     return (
         <React.Fragment>
             <Head>
