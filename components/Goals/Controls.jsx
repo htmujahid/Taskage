@@ -9,7 +9,7 @@ function Controls({ _id, setEditMode, setControls, setIsCardLoading }) {
 
     async function handleDelete() {
         setIsCardLoading(true);
-        await deleteGoal(todo._id);
+        await deleteGoal(_id);
         setIsCardLoading(false);
         mutate("/api/goals");
     }
