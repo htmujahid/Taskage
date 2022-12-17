@@ -91,7 +91,7 @@ function Task({ card }) {
                         <p className="text-xs">{card.description}</p>
                         <div className="pt-2">
                             <p className="text-blue-500 text-xs border border-blue-500 rounded-xl w-fit px-1 py-0.5">
-                                Today
+                                {new Date(card.date).toDateString()}
                             </p>
                         </div>
                     </div>
