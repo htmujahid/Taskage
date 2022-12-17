@@ -21,6 +21,7 @@ function Form({ listId }) {
         setIsFormOpen(false);
         if (title === "" || date === "") return;
 
+        console.log(title)
         const data = {
             title,
             description,
@@ -29,6 +30,7 @@ function Form({ listId }) {
         };
 
         await createTask(data);
+        console.log(data)
         setTask("");
         setDescription("");
         setDate("");
