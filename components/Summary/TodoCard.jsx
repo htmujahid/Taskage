@@ -18,7 +18,7 @@ function TodoCard({ count }) {
                         />
                     </div>
                     <div className="flex-1">
-                        <Text type={4}>Todo: {0}</Text>
+                        <Text type={4}>Todo: {count}</Text>
                     </div>
                     <div>
                         <Link href="/app/workspace">

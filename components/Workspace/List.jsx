@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import TaskComponent from "./Task";
-import Form from "./Form";
+import AddTask from "./AddTask";
 import { useSWRConfig } from "swr";
 
 import { WorkspaceContext } from "./index";
@@ -95,7 +95,7 @@ function List({ list }) {
                 </div>
             )}
             <div>
-                <Form listId={list._id} />
+                <AddTask listId={list._id} />
             </div>
             <div className="flex flex-col gap-y-2 pb-2">
                 {boradCards.map((card) => (

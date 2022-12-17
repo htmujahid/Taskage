@@ -20,14 +20,18 @@ function Form({ listId }) {
         e.preventDefault();
         setIsFormOpen(false);
         if (title === "" || date === "") return;
+
         const data = {
             title,
             description,
             date,
             list_id: listId,
         };
+
         await createTask(data);
         setTask("");
+        setDescription("");
+        setDate("");
         mutate("/api/workspace/tasks");
     }
 

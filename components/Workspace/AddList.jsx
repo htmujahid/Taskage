@@ -6,8 +6,13 @@ function AddList() {
     const [isAddMode, setIsAddMode] = useState(false);
     const { mutate } = useSWRConfig();
 
-    async function handleSubmit() {
+    async function handleSubmit(e) {
+        e.preventDefault();
+
         setIsAddMode(false);
+
+        if (title === "") return;
+
         const data = {
             title,
         };

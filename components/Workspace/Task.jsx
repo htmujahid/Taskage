@@ -3,7 +3,7 @@ import { useSWRConfig } from "swr";
 import { WorkspaceContext } from "./index";
 import TaskOptions from "./TaskOptions";
 
-import Edit from "./Edit";
+import EditTask from "./EditTask";
 
 function Task({ card }) {
     const { mutate } = useSWRConfig();
@@ -97,7 +97,7 @@ function Task({ card }) {
                     </div>
                 </div>
             ) : (
-                <Edit card={card} setIsEditMode={setIsEditMode} />
+                <EditTask card={card} setIsEditMode={setIsEditMode} />
             )}
         </React.Fragment>
     );

@@ -21,14 +21,20 @@ function Edit({ card, setIsEditMode }) {
     async function handleSubmit(e) {
         e.preventDefault();
         setIsFormOpen(false);
+
         if (title === "" || date === "") return;
+
         const data = {
             title,
             description,
             date,
         };
+
         await updateTask(card._id, data);
         setTask("");
+        setDescription("");
+        setDate("");
+
         mutate("/api/workspace/tasks");
         setIsEditMode(false);
     }

@@ -8,6 +8,9 @@ function EditList({ list, setIsEditMode }) {
 
     async function handleSubmit() {
         setIsEditMode(false);
+
+        if (title === "") return;
+
         const data = {
             title,
         };

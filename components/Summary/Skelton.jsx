@@ -5,7 +5,7 @@ function Skelton() {
     return (
         <div className="my-6">
             <div className="grid grid-cols-1 gap-4 container-lg mx-auto animate-pulse">
-                {[...Array(4).keys()].map((item) => (
+                {[...Array(6).keys()].map((item) => (
                     <Wrapper key={item}>
                         <FlexWrapper type={1}>
                             <div>
