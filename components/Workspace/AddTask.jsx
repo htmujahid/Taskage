@@ -12,10 +12,6 @@ function Form({ listId }) {
 
     const { mutate } = useSWRConfig();
 
-    useEffect(() => {
-        console.log(date);
-    }, [date]);
-
     async function handleSubmit(e) {
         e.preventDefault();
         setIsFormOpen(false);
